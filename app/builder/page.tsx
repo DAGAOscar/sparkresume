@@ -25,8 +25,6 @@ import Link from "next/link";
 export default function Builder() {
   const router = useRouter();
   const { isLoggedIn, loading } = useAuth();
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
-  const { isLoggedIn, loading } = useAuth();
   const [personalDetails, setPersonalDetails] = useState<PersonalDetails>(personalDetailsPreset)
   const [file, setFile] = useState<File | null>(null)
   const [theme, setTheme] = useState<string>('business')
