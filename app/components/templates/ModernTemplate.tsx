@@ -4,6 +4,7 @@ import React from 'react';
 import { CVData } from '@/app/utils/templates';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { ContactLinks } from './ContactLinks';
+import { SectionRenderer } from './SectionRenderer';
 
 interface ModernTemplateProps {
   data: CVData;
@@ -104,6 +105,9 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
             </div>
           </div>
         )}
+
+        {/* Additional Sections */}
+        <SectionRenderer data={data} className="mb-8" />
       </div>
     </div>
   );

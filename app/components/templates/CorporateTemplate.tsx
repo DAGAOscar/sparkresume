@@ -4,6 +4,7 @@ import React from 'react';
 import { CVData } from '@/app/utils/templates';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { ContactLinks } from './ContactLinks';
+import { SectionRenderer } from './SectionRenderer';
 
 interface CorporateTemplateProps {
   data: CVData;
@@ -99,6 +100,9 @@ export const CorporateTemplate: React.FC<CorporateTemplateProps> = ({ data }) =>
           </div>
         </div>
       )}
+
+      {/* Additional Sections */}
+      <SectionRenderer data={data} className="mb-8" />
     </div>
   );
 };
