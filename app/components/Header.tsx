@@ -9,8 +9,6 @@ export default function Header() {
   const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userEmail, setUserEmail] = useState('')
-  const [loading, setLoading] = useState(true)
 
   // Check authentication status on mount
   useEffect(() => {
@@ -18,13 +16,8 @@ export default function Header() {
       try {
         const { data: { session } } = await supabase.auth.getSession()
         setIsLoggedIn(!!session)
-        if (session?.user?.email) {
-          setUserEmail(session.user.email)
-        }
       } catch (error) {
         console.error('Auth check error:', error)
-      } finally {
-        setLoading(false)
       }
     }
 
@@ -33,9 +26,6 @@ export default function Header() {
     // Subscribe to auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       setIsLoggedIn(!!session)
-      if (session?.user?.email) {
-        setUserEmail(session.user.email)
-      }
     })
 
     return () => subscription?.unsubscribe()
@@ -47,7 +37,6 @@ export default function Header() {
     try {
       await supabase.auth.signOut()
       setIsLoggedIn(false)
-      setUserEmail('')
       setIsOpen(false)
       router.push('/')
     } catch (error) {

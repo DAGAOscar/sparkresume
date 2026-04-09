@@ -113,7 +113,7 @@ export default function Home() {
           <div className="max-w-2xl mx-auto">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">Ready to Build Your Dream CV?</h2>
             <p className="text-sm sm:text-base md:text-lg mb-6 sm:mb-8 opacity-90">
-              Join thousands of job seekers who've landed their dream jobs with SparkResume.
+              Join thousands of job seekers who&apos;ve landed their dream jobs with SparkResume.
             </p>
             <Link href="/signup" className="btn btn-secondary btn-sm sm:btn-md md:btn-lg">
               Start Building Now

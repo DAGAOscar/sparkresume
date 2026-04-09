@@ -1,7 +1,7 @@
 "use client"
 import { Plus, Download, Share2, Trash2, Eye, LogIn } from 'lucide-react'
 import Link from 'next/link'
-import { useState } from 'react'
+
 import Header from '@/app/components/Header'
 import { useAuth } from '@/app/hooks/useAuth'
 
@@ -36,7 +36,7 @@ export default function Dashboard() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-white">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-          <p className="text-gray-600">Vérification de l'authentification...</p>
+          <p className="text-gray-600">Vérification de l&apos;authentification...</p>
         </div>
       </div>
     );
@@ -147,7 +147,7 @@ export default function Dashboard() {
               </div>
             ) : (
               <div className="card bg-base-100 shadow text-center py-8 sm:py-12">
-                <p className="text-gray-600 mb-4 text-sm sm:text-base">You haven't created any CVs yet</p>
+                <p className="text-gray-600 mb-4 text-sm sm:text-base">You haven&apos;t created any CVs yet</p>
                 <Link href="/builder" className="btn btn-primary btn-sm sm:btn-md">
                   Create Your First CV
                 </Link>

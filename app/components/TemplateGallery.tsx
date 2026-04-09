@@ -12,7 +12,6 @@ interface TemplateGalleryProps {
 }
 
 export default function TemplateGallery({
-  cvData,
   onSelectTemplate,
   selectedTemplate,
 }: TemplateGalleryProps) {

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Layout, Palette } from 'lucide-react';
+import { Layout } from 'lucide-react';
 
 interface CVModelSelectorProps {
   selectedModel: string;

@@ -26,7 +26,7 @@ import Header from '@/app/components/Header';
 import { useAuth } from '@/app/hooks/useAuth';
 
 export default function TemplatesPage() {
-  const { isLoggedIn, loading } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [cvData, setCvData] = useState<CVData | null>(null);
   const [selectedTemplate, setSelectedTemplate] = useState<number | null>(null);
 
@@ -80,7 +80,7 @@ export default function TemplatesPage() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-white">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-          <p className="text-gray-600">Vérification de l'authentification...</p>
+          <p className="text-gray-600">Vérification de l&apos;authentification...</p>
         </div>
       </div>
     );

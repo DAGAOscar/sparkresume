@@ -20,7 +20,7 @@ export default function Settings() {
 
   const [isSaving, setIsSaving] = useState(false)
 
-  const handleChange = (field: string, value: any) => {
+  const handleChange = (field: string, value: string | number | boolean) => {
     setSettings(prev => ({
       ...prev,
       [field]: value
@@ -41,7 +41,7 @@ export default function Settings() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-gray-50 to-white">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-          <p className="text-gray-600">Vérification de l'authentification...</p>
+          <p className="text-gray-600">Vérification de l&apos;authentification...</p>
         </div>
       </div>
     );
