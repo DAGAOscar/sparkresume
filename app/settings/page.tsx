@@ -1,24 +1,54 @@
 "use client"
 import { Save, Bell, Lock, Eye, Palette, LogIn } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Header from '@/app/components/Header'
 import { useAuth } from '@/app/hooks/useAuth'
+import { supabase } from '@/app/lib/supabase'
 
 export default function Settings() {
-  const { isLoggedIn, loading } = useAuth()
-
+  const { isLoggedIn, user, loading } = useAuth()
   const [settings, setSettings] = useState({
-    email: 'user@example.com',
-    fullName: 'John Doe',
+    email: '',
+    fullName: '',
     language: 'en',
     theme: 'light',
     emailNotifications: true,
     twoFactorAuth: false,
     profilePrivacy: 'public'
   })
-
   const [isSaving, setIsSaving] = useState(false)
+  const [successMessage, setSuccessMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+
+  // Load profile from Supabase
+  useEffect(() => {
+    if (user?.id) {
+      loadProfile()
+    }
+  }, [user?.id])
+
+  const loadProfile = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', user?.id)
+        .single()
+
+      if (error) throw error
+
+      if (data) {
+        setSettings(prev => ({
+          ...prev,
+          email: data.email || '',
+          fullName: data.full_name || ''
+        }))
+      }
+    } catch (err) {
+      console.error('Error loading profile:', err)
+    }
+  }
 
   const handleChange = (field: string, value: string | number | boolean) => {
     setSettings(prev => ({
@@ -29,10 +59,28 @@ export default function Settings() {
 
   const handleSave = async () => {
     setIsSaving(true)
-    setTimeout(() => {
+    setSuccessMessage('')
+    setErrorMessage('')
+
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          full_name: settings.fullName,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', user?.id)
+
+      if (error) throw error
+
+      setSuccessMessage('✓ Settings saved successfully!')
+      setTimeout(() => setSuccessMessage(''), 3000)
+    } catch (err) {
+      setErrorMessage(err instanceof Error ? err.message : 'Error saving settings')
+      setTimeout(() => setErrorMessage(''), 3000)
+    } finally {
       setIsSaving(false)
-      alert('Settings saved successfully!')
-    }, 1500)
+    }
   }
 
   // Check authentication
@@ -110,8 +158,10 @@ export default function Settings() {
                       type="email"
                       className="input input-bordered input-sm sm:input-md w-full text-sm"
                       value={settings.email}
-                      onChange={(e) => handleChange('email', e.target.value)}
+                      disabled
+                      title="Email cannot be changed here. Contact support to update your email."
                     />
+                    <p className="text-xs text-gray-500 mt-1">Email is managed by your account settings</p>
                   </div>
 
                   {/* Language */}
@@ -245,11 +295,25 @@ export default function Settings() {
               </div>
             </div>
 
+            {/* Success/Error Messages */}
+            {successMessage && (
+              <div className="alert alert-success">
+                <span>{successMessage}</span>
+              </div>
+            )}
+
+            {errorMessage && (
+              <div className="alert alert-error">
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
             {/* Save Button */}
             <div className="flex justify-end gap-2 sm:gap-4">
               <button className="btn btn-ghost btn-sm sm:btn-md">Cancel</button>
               <button
                 onClick={handleSave}
+                disabled={isSaving}
                 disabled={isSaving}
                 className="btn btn-primary btn-sm sm:btn-md gap-1 sm:gap-2"
               >
