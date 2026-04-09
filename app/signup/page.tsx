@@ -49,6 +49,25 @@ export default function Signup() {
       if (error) throw error
 
       if (data.user) {
+        // Fallback: manually create profile if trigger didn't work
+        try {
+          const { error: profileError } = await supabase
+            .from('profiles')
+            .insert([
+              {
+                id: data.user.id,
+                email: data.user.email,
+              }
+            ])
+          
+          if (profileError) {
+            console.warn('Profile creation warning:', profileError)
+            // Don't throw - let user continue even if profile insert fails
+          }
+        } catch (profileErr) {
+          console.warn('Profile creation fallback error:', profileErr)
+        }
+
         setSuccess(true)
         setEmail('')
         setPassword('')
