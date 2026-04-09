@@ -314,7 +314,6 @@ export default function Settings() {
               <button
                 onClick={handleSave}
                 disabled={isSaving}
-                disabled={isSaving}
                 className="btn btn-primary btn-sm sm:btn-md gap-1 sm:gap-2"
               >
                 {isSaving ? (
