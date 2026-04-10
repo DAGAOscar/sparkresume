@@ -163,3 +163,24 @@
 .theme-dark .divider {
     @apply bg-slate-700;
 }
+
+/* Hero section styling for dark theme */
+.theme-dark .theme-blue-hero {
+    background: linear-gradient(to bottom right, #1e3a8a, #1e40af) !important;
+}
+
+.theme-dark .theme-blue-hero h1 {
+    @apply text-white;
+}
+
+.theme-dark .theme-blue-hero p {
+    @apply text-blue-100;
+}
+
+.theme-dark .theme-blue-hero .text-gray-500 {
+    @apply text-blue-200;
+}
+
+.theme-dark .theme-blue-hero .from-blue-100 {
+    background: linear-gradient(to bottom right, #1e40af, #1e3a8a) !important;
+}
