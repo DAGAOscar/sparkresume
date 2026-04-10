@@ -320,8 +320,7 @@ export default function Home() {
               <p className="font-bold text-white mb-4">Product</p>
               <ul className="space-y-2 text-sm">
                 <li><Link href="/templates" className="hover:text-white">Templates</Link></li>
-                <li><Link href="/builder" className="hover:text-white">CV Builder</Link></li>
-                <li><Link href="/pricing" className="hover:text-white">Pricing</Link></li>
+                <li><Link href="/upgrade" className="hover:text-white">Premium</Link></li>
               </ul>
             </div>
             <div>

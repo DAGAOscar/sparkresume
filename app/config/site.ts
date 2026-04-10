@@ -23,7 +23,7 @@ export const siteConfig = {
     contact: '/contact',
     upgrade: '/upgrade',
     dashboard: '/dashboard',
-    builder: '/builder'
+    templates: '/templates'
   },
   features: {
     pdfDownloads: {

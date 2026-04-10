@@ -32,7 +32,7 @@ export const WelcomeEmail: React.FC<WelcomeEmailProps> = ({
 
         <p style={{ textAlign: 'center', margin: '30px 0' }}>
           <a 
-            href={confirmUrl || 'https://sparkresume.work/builder'} 
+            href={confirmUrl || 'https://sparkresume.work/templates'} 
             style={{
               backgroundColor: '#3b82f6',
               color: 'white',

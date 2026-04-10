@@ -68,7 +68,7 @@ export const DownloadConfirmEmail: React.FC<DownloadConfirmProps> = ({
             </a>
           ) : (
             <a 
-              href="https://sparkresume.work/builder" 
+              href="https://sparkresume.work/templates" 
               style={{
                 backgroundColor: '#3b82f6',
                 color: 'white',
@@ -79,7 +79,7 @@ export const DownloadConfirmEmail: React.FC<DownloadConfirmProps> = ({
                 fontWeight: 'bold'
               }}
             >
-              Retour au builder
+              Retour aux templates
             </a>
           )}
         </p>

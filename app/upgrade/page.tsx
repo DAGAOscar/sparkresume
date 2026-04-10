@@ -39,9 +39,9 @@ export default function UpgradePage() {
       
       setUpgradeMessage(`✓ Upgrade successful! Premium activated for ${period === 'monthly' ? '30 days' : '1 year'}.`)
       
-      // Redirect to builder after 2 seconds
+      // Redirect to templates after 2 seconds
       setTimeout(() => {
-        router.push('/builder')
+        router.push('/templates')
       }, 2000)
     } catch (error) {
       console.error('Error upgrading subscription:', error)
@@ -89,11 +89,11 @@ export default function UpgradePage() {
           {/* Header */}
           <div className="mb-12 text-center">
             <Link 
-              href="/builder" 
+              href="/templates" 
               className="inline-flex items-center gap-2 text-primary hover:text-primary/80 mb-6"
             >
               <ArrowLeft className="w-4" />
-              Retour au builder
+              Retour aux templates
             </Link>
             <h1 className="text-4xl font-bold mb-4">
               Passez à <span className="text-primary">Premium</span>

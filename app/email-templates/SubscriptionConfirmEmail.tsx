@@ -46,7 +46,7 @@ export const SubscriptionConfirmEmail: React.FC<SubscriptionConfirmProps> = ({
 
         <p style={{ textAlign: 'center', margin: '30px 0' }}>
           <a 
-            href="https://sparkresume.work/builder" 
+            href="https://sparkresume.work/templates" 
             style={{
               backgroundColor: '#3b82f6',
               color: 'white',
@@ -57,7 +57,7 @@ export const SubscriptionConfirmEmail: React.FC<SubscriptionConfirmProps> = ({
               fontWeight: 'bold'
             }}
           >
-            Retour au builder
+            Retour aux templates
           </a>
         </p>
 
