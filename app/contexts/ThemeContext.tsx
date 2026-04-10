@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-type Theme = 'light' | 'dark'
+type Theme = 'garden' | 'abyss'
 
 interface ThemeContextType {
   theme: Theme
@@ -12,7 +12,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light')
+  const [theme, setTheme] = useState<Theme>('garden')
   const [mounted, setMounted] = useState(false)
 
   // Load theme from localStorage on mount
@@ -22,22 +22,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setTheme(savedTheme)
       applyTheme(savedTheme)
     } else {
-      applyTheme('light')
+      applyTheme('garden')
     }
     setMounted(true)
   }, [])
 
-  // Apply theme to document
+  // Apply theme to document using data-theme attribute
   const applyTheme = (newTheme: Theme) => {
     const html = document.documentElement
-    
-    // Remove all theme classes
-    html.classList.remove('theme-light', 'theme-dark')
-    
-    // Add new theme class
-    html.classList.add(`theme-${newTheme}`)
-    
-    // Save to localStorage
+    html.setAttribute('data-theme', newTheme)
     localStorage.setItem('theme', newTheme)
   }
 
@@ -59,10 +52,10 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
 export function useTheme() {
   const context = useContext(ThemeContext)
-  if (undefined === context) {
-    // Return a default value during SSR
+  if (!context) {
+    // Fallback for SSR - should not happen if ThemeProvider is used correctly
     return {
-      theme: 'light' as const,
+      theme: 'garden' as const,
       setTheme: () => {},
     }
   }
