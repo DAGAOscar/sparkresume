@@ -1,12 +1,12 @@
-import Stripe from 'stripe'
-
-let stripe: Stripe | null = null
+let stripe: any = null
 
 function getStripe() {
   if (!stripe) {
     if (!process.env.STRIPE_SECRET_KEY) {
       throw new Error('Missing STRIPE_SECRET_KEY environment variable')
     }
+    // Lazy import Stripe only when needed
+    const Stripe = require('stripe').default
     stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
       typescript: true,
     })
