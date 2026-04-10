@@ -28,7 +28,7 @@ export const DownloadLimitModal: React.FC<DownloadLimitModalProps> = ({
         <div className="modal-box w-full max-w-md">
           <h3 className="font-bold text-lg mb-2">🎉 Unlock Unlimited Downloads!</h3>
           <p className="text-sm text-gray-600 mb-4">
-            You've used your {downloadsUsed} free PDF downloads. Upgrade to Premium to export unlimited CVs and access advanced features.
+            You&apos;ve used your {downloadsUsed} free PDF downloads. Upgrade to Premium to export unlimited CVs and access advanced features.
           </p>
 
           {/* Pricing Plans */}

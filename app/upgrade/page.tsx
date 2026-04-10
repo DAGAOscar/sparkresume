@@ -24,22 +24,6 @@ export default function UpgradePage() {
     'Subscription management'
   ]
 
-  const pricing = {
-    monthly: {
-      price: 1.00,
-      period: 'month',
-      description: '$1.00 USD per month',
-      durationDays: 30
-    },
-    yearly: {
-      price: 10.00,
-      period: 'year',
-      description: '$10.00 USD per year',
-      durationDays: 365,
-      save: '17%'
-    }
-  }
-
   const handleUpgrade = async (period: 'monthly' | 'yearly') => {
     if (!user?.id) return
 

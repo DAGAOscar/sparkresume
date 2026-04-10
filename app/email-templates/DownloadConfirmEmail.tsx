@@ -9,7 +9,6 @@ interface DownloadConfirmProps {
 
 export const DownloadConfirmEmail: React.FC<DownloadConfirmProps> = ({
   name,
-  downloadCount,
   remainingDownloads,
   maxFreeDownloads
 }) => {

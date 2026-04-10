@@ -104,7 +104,7 @@ async function handleCheckoutSessionCompleted(
     await upgradeToPremium(userId, expirationDays)
 
     // Update Stripe customer metadata with subscription
-    const { data: subscriptionData } = await supabase
+    await supabase
       .from('profiles')
       .update({
         stripe_customer_id: session.customer as string,

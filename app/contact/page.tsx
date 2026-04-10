@@ -113,7 +113,7 @@ export default function ContactPage() {
                   </li>
                   <li>
                     <a href="#" className="text-primary hover:underline">
-                      Limites d'utilisation
+                      Limites d&apos;utilisation
                     </a>
                   </li>
                 </ul>

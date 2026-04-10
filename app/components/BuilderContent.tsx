@@ -80,7 +80,7 @@ export function BuilderContent() {
         if (data) {
           // Load personal details
           if (data.personal_details) {
-            const details = data.personal_details as Record<string, any>;
+            const details = data.personal_details as { name?: string; email?: string; phone?: string; location?: string; summary?: string };
             setPersonalDetails({
               fullName: details.name || '',
               email: details.email || '',
