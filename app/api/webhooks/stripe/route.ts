@@ -116,7 +116,7 @@ async function handleCheckoutSessionCompleted(
 
     // Send subscription confirmation email
     if (userEmailToUse) {
-      const price = plan === 'monthly' ? 4.99 : 39.99
+      const price = plan === 'monthly' ? 1.00 : 10.00
       await emailService.sendSubscriptionEmail(
         userEmailToUse,
         userName,

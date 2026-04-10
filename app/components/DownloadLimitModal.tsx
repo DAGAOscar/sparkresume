@@ -55,7 +55,7 @@ export const DownloadLimitModal: React.FC<DownloadLimitModalProps> = ({
             <div className="border-2 border-primary rounded-lg p-4 bg-primary/5">
               <div className="flex justify-between items-start mb-2">
                 <h4 className="font-semibold text-primary">Premium - Monthly</h4>
-                <span className="badge badge-primary">$4.99/mo</span>
+                <span className="badge badge-primary">$1.00/mo</span>
               </div>
               <ul className="text-sm space-y-1 text-gray-700 mb-3">
                 <li className="flex items-center gap-2">
@@ -87,7 +87,7 @@ export const DownloadLimitModal: React.FC<DownloadLimitModalProps> = ({
             <div className="border border-secondary rounded-lg p-4 bg-secondary/5">
               <div className="flex justify-between items-start mb-2">
                 <h4 className="font-semibold text-secondary">Premium - Yearly</h4>
-                <span className="badge badge-secondary">$39.99/yr</span>
+                <span className="badge badge-secondary">$10.00/yr</span>
               </div>
               <ul className="text-sm space-y-1 text-gray-700 mb-3">
                 <li className="flex items-center gap-2">
