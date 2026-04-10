@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-type Theme = 'garden' | 'abyss'
+type Theme = 'sunset' | 'abyss'
 
 interface ThemeContextType {
   theme: Theme
@@ -12,7 +12,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('garden')
+  const [theme, setTheme] = useState<Theme>('sunset')
   const [mounted, setMounted] = useState(false)
 
   // Load theme from localStorage on mount
@@ -22,7 +22,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setTheme(savedTheme)
       applyTheme(savedTheme)
     } else {
-      applyTheme('garden')
+      applyTheme('sunset')
     }
     setMounted(true)
   }, [])
@@ -55,7 +55,7 @@ export function useTheme() {
   if (!context) {
     // Fallback for SSR - should not happen if ThemeProvider is used correctly
     return {
-      theme: 'garden' as const,
+      theme: 'sunset' as const,
       setTheme: () => {},
     }
   }

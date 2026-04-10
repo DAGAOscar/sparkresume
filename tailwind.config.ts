@@ -20,10 +20,10 @@ export default {
   daisyui: {
     themes: [
       {
-        garden: {
-          "primary": "#15803d",
-          "secondary": "#0891b2",
-          "accent": "#f59e0b",
+        sunset: {
+          "primary": "#ea580c",
+          "secondary": "#f59e0b",
+          "accent": "#ff6b35",
           "neutral": "#2a2e37",
           "base-100": "#ffffff",
           "base-200": "#f9fafb",

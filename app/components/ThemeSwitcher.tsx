@@ -1,7 +1,7 @@
 'use client'
 
 import { useTheme } from '@/app/contexts/ThemeContext'
-import { Leaf, Building2 } from 'lucide-react'
+import { Sunset, Building2 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
 export default function ThemeSwitcher() {
@@ -19,15 +19,15 @@ export default function ThemeSwitcher() {
   return (
     <div className="flex items-center gap-2 bg-base-200 rounded-lg p-1">
       <button
-        onClick={() => setTheme('garden')}
-        title="Garden Theme"
+        onClick={() => setTheme('sunset')}
+        title="Sunset Theme"
         className={`p-2 rounded-md transition-colors ${
-          theme === 'garden'
+          theme === 'sunset'
             ? 'bg-base-100 text-primary shadow-md'
             : 'text-base-content/60 hover:text-base-content'
         }`}
       >
-        <Leaf className="w-5 h-5" />
+        <Sunset className="w-5 h-5" />
       </button>
       <button
         onClick={() => setTheme('abyss')}
