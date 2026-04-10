@@ -2,6 +2,7 @@
 import { CheckCircle, Download, Zap, Lock } from 'lucide-react'
 import Link from 'next/link'
 import Header from './components/Header'
+import PremiumButton from './components/PremiumButton'
 
 export default function Home() {
   return (
@@ -311,9 +312,10 @@ export default function Home() {
                   <span>Full customization</span>
                 </li>
               </ul>
-              <Link href="/upgrade" className="w-full py-3 bg-black text-white font-bold rounded-lg hover:opacity-90">
-                Upgrade Now
-              </Link>
+              <PremiumButton 
+                text="Upgrade Now"
+                className="w-full py-3 bg-black text-white font-bold rounded-lg hover:opacity-90"
+              />
             </div>
           </div>
         </div>
