@@ -1,16 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useAuth } from '@/app/hooks/useAuth'
-import { upgradeToPremium } from '@/app/lib/subscriptionService'
 import Header from '@/app/components/Header'
 import { Check, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
+import { stripePrices } from '@/app/lib/stripeService'
 
 export default function UpgradePage() {
   const { isLoggedIn, loading, user } = useAuth()
-  const router = useRouter()
   const [isUpgrading, setIsUpgrading] = useState(false)
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly')
   const [upgradeMessage, setUpgradeMessage] = useState('')
@@ -31,22 +29,32 @@ export default function UpgradePage() {
     setUpgradeMessage('')
 
     try {
-      // Calculate expiration date based on period
-      const expiresIn = period === 'monthly' ? 30 : 365
-      
-      // Update user subscription in database
-      await upgradeToPremium(user.id, expiresIn)
-      
-      setUpgradeMessage(`✓ Upgrade successful! Premium activated for ${period === 'monthly' ? '30 days' : '1 year'}.`)
-      
-      // Redirect to templates after 2 seconds
-      setTimeout(() => {
-        router.push('/templates')
-      }, 2000)
+      // Get the correct price ID based on billing period
+      const priceId = period === 'monthly' ? stripePrices.monthly.priceId : stripePrices.yearly.priceId
+
+      // Call API to create checkout session
+      const response = await fetch('/api/payment/create-checkout-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          priceId,
+          plan: period,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create checkout session')
+      }
+
+      const { sessionId } = await response.json()
+
+      // Redirect to Stripe Checkout
+      window.location.href = `https://checkout.stripe.com/pay/${sessionId}`
     } catch (error) {
       console.error('Error upgrading subscription:', error)
-      setUpgradeMessage('Failed to upgrade subscription. Please try again.')
-    } finally {
+      setUpgradeMessage('Failed to redirect to payment. Please try again.')
       setIsUpgrading(false)
     }
   }
