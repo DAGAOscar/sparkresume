@@ -11,10 +11,10 @@ interface CreativeDesignerTemplateProps {
 
 export const CreativeDesignerTemplate: React.FC<CreativeDesignerTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-gradient-to-br from-purple-50 via-white to-pink-50 text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
+    <div className="w-full bg-gradient-to-br from-purple-50 via-white to-pink-50 text-gray-900 p-4 md:p-6 lg:p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Decorative Header */}
-      <div className="text-center mb-8 pb-8 border-b-2 border-purple-200">
-        <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-3" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.6px' }}>{data.name}</h1>
+      <div className="text-center mb-4 md:mb-6 lg:mb-8 pb-4 md:pb-6 lg:pb-8 border-b-2 border-purple-200">
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-3" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.6px' }}>{data.name}</h1>
         <div className="flex flex-wrap justify-center gap-5 items-center text-sm text-gray-600">
           <span>{data.email}</span>
           <span>•</span>
@@ -27,19 +27,19 @@ export const CreativeDesignerTemplate: React.FC<CreativeDesignerTemplateProps> =
 
       {/* Summary */}
       {data.summary && (
-        <div className="mb-8">
+        <div className="mb-4 md:mb-6 lg:mb-8">
           <h2 className="text-sm font-bold text-purple-600 uppercase tracking-widest mb-3">About Me</h2>
           <p className="text-sm leading-relaxed text-gray-700 italic">{data.summary}</p>
         </div>
       )}
 
       {/* Experience */}
-      <div className="mb-8">
+      <div className="mb-4 md:mb-6 lg:mb-8">
         <h2 className="text-sm font-bold text-purple-600 uppercase tracking-widest mb-4">Experience</h2>
         <div className="space-y-5">
           {data.experience.map((exp, idx) => (
-            <div key={idx} className="bg-white p-4 rounded-lg border-l-4 border-purple-400">
-              <h3 className="font-bold text-base text-gray-900">{exp.title}</h3>
+            <div key={idx} className="bg-white p-3 md:p-4 rounded-lg border-l-4 border-purple-400">
+              <h3 className="font-bold text-sm md:text-base text-gray-900">{exp.title}</h3>
               <p className="text-sm text-purple-600 font-semibold">{exp.company}</p>
               <p className="text-xs text-gray-600 mb-2">
                 {exp.startDate} – {exp.endDate || 'Now'}
@@ -51,12 +51,12 @@ export const CreativeDesignerTemplate: React.FC<CreativeDesignerTemplateProps> =
       </div>
 
       {/* Education */}
-      <div className="mb-8">
+      <div className="mb-4 md:mb-6 lg:mb-8">
         <h2 className="text-sm font-bold text-purple-600 uppercase tracking-widest mb-4">Education</h2>
         <div className="space-y-3">
           {data.education.map((edu, idx) => (
-            <div key={idx} className="bg-white p-4 rounded-lg">
-              <h3 className="font-bold text-gray-900">{edu.degree} in {edu.field}</h3>
+            <div key={idx} className="bg-white p-3 md:p-4 rounded-lg">
+              <h3 className="font-bold text-sm md:text-base text-gray-900">{edu.degree} in {edu.field}</h3>
               <p className="text-sm text-purple-600">{edu.school}</p>
               <p className="text-xs text-gray-600">{edu.graduationDate}</p>
             </div>
@@ -65,7 +65,7 @@ export const CreativeDesignerTemplate: React.FC<CreativeDesignerTemplateProps> =
       </div>
 
       {/* Skills */}
-      <div className="mb-8">
+      <div className="mb-4 md:mb-6 lg:mb-8">
         <h2 className="text-sm font-bold text-purple-600 uppercase tracking-widest mb-3">Skills</h2>
         <div className="flex flex-wrap gap-2">
           {data.skills.map((skill, idx) => (
@@ -78,9 +78,9 @@ export const CreativeDesignerTemplate: React.FC<CreativeDesignerTemplateProps> =
 
       {/* Languages */}
       {data.languages && data.languages.length > 0 && (
-        <div>
+        <div className="mb-4 md:mb-6 lg:mb-8">
           <h2 className="text-sm font-bold text-purple-600 uppercase tracking-widest mb-3">Languages</h2>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
             {data.languages.map((lang, idx) => (
               <div key={idx} className="text-sm">
                 <p className="font-semibold text-gray-900">🌐 {lang.name}</p>

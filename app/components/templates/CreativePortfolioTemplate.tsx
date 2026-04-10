@@ -52,7 +52,7 @@ export const CreativePortfolioTemplate: React.FC<CreativePortfolioTemplateProps>
       </div>
 
       {/* Education */}
-      <div className="mb-8">
+      <div className="mb-4 md:mb-6 lg:mb-8">
         <h2 className="text-sm font-bold text-indigo-600 uppercase tracking-widest mb-4">Education</h2>
         <div className="space-y-3">
           {data.education.map((edu, idx) => (

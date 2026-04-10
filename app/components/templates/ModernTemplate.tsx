@@ -11,10 +11,10 @@ interface ModernTemplateProps {
 
 export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
+    <div className="w-full bg-white text-gray-900 p-4 md:p-6 lg:p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-5xl font-bold mb-1 text-blue-600" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.8px' }}>{data.name}</h1>
+      <div className="mb-4 md:mb-6 lg:mb-8">
+        <h1 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-1 text-blue-600" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.8px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-6 text-sm text-gray-600 mt-4 items-center">
           <span>{data.email}</span>
           <span>•</span>
@@ -25,23 +25,23 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
         </div>
       </div>
 
-      <div className="border-t-2 border-blue-600 pt-6">
+      <div className="border-t-2 border-blue-600 pt-3 md:pt-4 lg:pt-6">
         {/* Summary */}
         {data.summary && (
-          <div className="mb-8">
+          <div className="mb-4 md:mb-6 lg:mb-8">
             <h2 className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-3">About</h2>
             <p className="text-sm leading-relaxed text-gray-700">{data.summary}</p>
           </div>
         )}
 
         {/* Experience */}
-        <div className="mb-8">
+        <div className="mb-4 md:mb-6 lg:mb-8">
           <h2 className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-4">Experience</h2>
           <div className="space-y-5">
             {data.experience.map((exp, idx) => (
               <div key={idx}>
-                <div className="flex justify-between items-start mb-1">
-                  <h3 className="font-semibold text-base text-gray-900">{exp.title}</h3>
+                <div className="flex flex-col md:flex-row md:justify-between items-start mb-1">
+                  <h3 className="font-semibold text-sm md:text-base text-gray-900">{exp.title}</h3>
                   <span className="text-xs text-gray-500">
                     {exp.startDate} – {exp.endDate || 'Present'}
                   </span>
@@ -54,14 +54,14 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
         </div>
 
         {/* Education */}
-        <div className="mb-8">
+        <div className="mb-4 md:mb-6 lg:mb-8">
           <h2 className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-4">Education</h2>
           <div className="space-y-4">
             {data.education.map((edu, idx) => (
               <div key={idx}>
-                <div className="flex justify-between items-start">
+                <div className="flex flex-col md:flex-row md:justify-between items-start">
                   <div>
-                    <h3 className="font-semibold text-base text-gray-900">{edu.degree}</h3>
+                    <h3 className="font-semibold text-sm md:text-base text-gray-900">{edu.degree}</h3>
                     <p className="text-sm text-blue-600">{edu.school}</p>
                   </div>
                   <span className="text-xs text-gray-500">{edu.graduationDate}</span>
@@ -72,7 +72,7 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
         </div>
 
         {/* Skills */}
-        <div className="mb-8">
+        <div className="mb-4 md:mb-6 lg:mb-8">
           <h2 className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-3">Skills</h2>
           <div className="flex flex-wrap gap-2">
             {data.skills.map((skill, idx) => (
@@ -87,7 +87,7 @@ export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
         {data.languages && data.languages.length > 0 && (
           <div>
             <h2 className="text-sm font-bold text-blue-600 uppercase tracking-widest mb-3">Languages</h2>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {data.languages.map((lang, idx) => (
                 <div key={idx} className="text-sm">
                   <p className="font-medium text-gray-900">{lang.name}</p>

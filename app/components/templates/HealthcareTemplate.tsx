@@ -10,10 +10,10 @@ interface HealthcareTemplateProps {
 
 export const HealthcareTemplate: React.FC<HealthcareTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
+    <div className="w-full bg-white text-gray-900 p-4 md:p-6 lg:p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Header */}
-      <div className="mb-8 pb-6 border-b-4 border-emerald-600">
-        <h1 className="text-4xl font-bold text-emerald-700 mb-3" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.5px' }}>{data.name}</h1>
+      <div className="mb-4 md:mb-6 lg:mb-8 pb-3 md:pb-4 lg:pb-6 border-b-4 border-emerald-600">
+        <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-emerald-700 mb-3" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.5px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-4 items-center text-sm text-gray-700">
           <span>{data.email}</span>
           <span>•</span>
@@ -26,19 +26,19 @@ export const HealthcareTemplate: React.FC<HealthcareTemplateProps> = ({ data }) 
 
       {/* Summary */}
       {data.summary && (
-        <div className="mb-8">
+        <div className="mb-4 md:mb-6 lg:mb-8">
           <h2 className="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-3">Professional Summary</h2>
           <p className="text-sm leading-relaxed text-gray-700">{data.summary}</p>
         </div>
       )}
 
       {/* Clinical Experience */}
-      <div className="mb-8">
+      <div className="mb-4 md:mb-6 lg:mb-8">
         <h2 className="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-4">Clinical & Professional Experience</h2>
         <div className="space-y-5">
           {data.experience.map((exp, idx) => (
-            <div key={idx} className="bg-emerald-50 p-4 rounded-lg border-l-4 border-emerald-600">
-              <h3 className="font-bold text-base text-gray-900">{exp.title}</h3>
+            <div key={idx} className="bg-emerald-50 p-3 md:p-4 rounded-lg border-l-4 border-emerald-600">
+              <h3 className="font-bold text-sm md:text-base text-gray-900">{exp.title}</h3>
               <p className="text-sm text-emerald-700 font-semibold mb-1">{exp.company}</p>
               <p className="text-xs text-gray-600 mb-2">
                 {exp.startDate} – {exp.endDate || 'Current'}
@@ -50,7 +50,7 @@ export const HealthcareTemplate: React.FC<HealthcareTemplateProps> = ({ data }) 
       </div>
 
       {/* Education & Credentials */}
-      <div className="mb-8">
+      <div className="mb-4 md:mb-6 lg:mb-8">
         <h2 className="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-4">Medical Education & Credentials</h2>
         <div className="space-y-4">
           {data.education.map((edu, idx) => (

@@ -338,7 +338,7 @@ export function BuilderContent() {
     <div>
       <Header />
       
-      {/* Desktop View */}
+      {/* Desktop View - 2 Column Layout */}
       <div className="hidden lg:block">
         <section className="flex items-center min-h-screen">
 
@@ -374,12 +374,6 @@ export function BuilderContent() {
                 </button>
               </div>
             </div>
-
-            {saveMessage && (
-              <div className={`alert mb-4 ${saveMessage.includes('Error') ? 'alert-error' : 'alert-success'}`}>
-                <p>{saveMessage}</p>
-              </div>
-            )}
 
             <div className="flex flex-col gap-6 rounded-lg">
 

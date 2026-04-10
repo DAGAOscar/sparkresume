@@ -11,14 +11,14 @@ interface TwoColumnTemplateProps {
 
 export const TwoColumnTemplate: React.FC<TwoColumnTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-gray-900 flex" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
+    <div className="w-full bg-white text-gray-900 flex flex-col md:flex-row" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Left Column - Sidebar */}
-      <div className="w-1/3 bg-gradient-to-b from-blue-600 to-blue-700 text-white p-8">
-        <h1 className="text-3xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.4px' }}>{data.name}</h1>
+      <div className="w-full md:w-1/3 bg-gradient-to-b from-blue-600 to-blue-700 text-white p-4 md:p-8">
+        <h1 className="text-2xl md:text-3xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.4px' }}>{data.name}</h1>
         <p className="text-blue-100 text-sm mb-8">Professional</p>
 
         {/* Contact */}
-        <div className="mb-8">
+        <div className="mb-4 md:mb-8">
           <h3 className="text-xs font-bold uppercase tracking-widest text-blue-200 mb-4">Contact</h3>
           <div className="space-y-3">
             <div className="text-xs">{data.email}</div>
@@ -31,7 +31,7 @@ export const TwoColumnTemplate: React.FC<TwoColumnTemplateProps> = ({ data }) =>
         </div>
 
         {/* Skills */}
-        <div className="mb-8">
+        <div className="mb-4 md:mb-8">
           <h3 className="text-xs font-bold uppercase tracking-widest text-blue-200 mb-4">Skills</h3>
           <div className="space-y-2">
             {data.skills.map((skill, idx) => (
@@ -59,23 +59,23 @@ export const TwoColumnTemplate: React.FC<TwoColumnTemplateProps> = ({ data }) =>
       </div>
 
       {/* Right Column - Main Content */}
-      <div className="w-2/3 p-8">
+      <div className="w-full md:w-2/3 p-4 md:p-8">
         {/* Summary */}
         {data.summary && (
-          <div className="mb-8">
+          <div className="mb-4 md:mb-8">
             <h2 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-3 pb-2 border-b-2 border-blue-600">About</h2>
             <p className="text-sm leading-relaxed text-gray-700">{data.summary}</p>
           </div>
         )}
 
         {/* Experience */}
-        <div className="mb-8">
+        <div className="mb-4 md:mb-8">
           <h2 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-4 pb-2 border-b-2 border-blue-600">Experience</h2>
           <div className="space-y-5">
             {data.experience.map((exp, idx) => (
               <div key={idx}>
-                <div className="flex justify-between items-start mb-1">
-                  <h3 className="font-bold text-base text-gray-900">{exp.title}</h3>
+                <div className="flex flex-col md:flex-row md:justify-between items-start mb-1">
+                  <h3 className="font-bold text-sm md:text-base text-gray-900\">{exp.title}</h3>
                   <span className="text-xs text-gray-600">
                     {exp.startDate} – {exp.endDate || 'Present'}
                   </span>

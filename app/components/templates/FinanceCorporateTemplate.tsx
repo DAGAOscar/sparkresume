@@ -11,10 +11,10 @@ interface FinanceCorporateTemplateProps {
 
 export const FinanceCorporateTemplate: React.FC<FinanceCorporateTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
+    <div className="w-full bg-white text-gray-900 p-4 md:p-6 lg:p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Header with Background */}
-      <div className="bg-gray-800 text-white p-6 mb-8 -mx-8 -mt-8 px-8 mb-8">
-        <h1 className="text-3xl font-bold mb-3" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.4px' }}>{data.name}</h1>
+      <div className="bg-gray-800 text-white p-3 md:p-4 lg:p-6 mb-4 md:mb-6 lg:mb-8 -mx-4 md:-mx-6 lg:-mx-8 -mt-4 md:-mt-6 lg:-mt-8 px-4 md:px-6 lg:px-8">
+        <h1 className="text-2xl md:text-3xl lg:text-3xl font-bold mb-3" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.4px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-4 items-center text-sm text-gray-700">
           <span>{data.email}</span>
           <span>•</span>
@@ -27,19 +27,19 @@ export const FinanceCorporateTemplate: React.FC<FinanceCorporateTemplateProps> =
 
       {/* Professional Objective */}
       {data.summary && (
-        <div className="mb-8">
+        <div className="mb-4 md:mb-6 lg:mb-8">
           <h2 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-3 pb-2 border-b-2 border-amber-600">Professional Objective</h2>
           <p className="text-sm leading-relaxed text-gray-700">{data.summary}</p>
         </div>
       )}
 
       {/* Career Progression */}
-      <div className="mb-8">
-        <h2 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-4 pb-2 border-b-2 border-amber-600">Career Progression</h2>
+      <div className="mb-4 md:mb-6 lg:mb-8">
+        <h2 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-4 pb-2 border-b-2 border-amber-600\">Career Progression</h2>
         <div className="space-y-5">
           {data.experience.map((exp, idx) => (
-            <div key={idx} className="border-l-4 border-amber-600 pl-4">
-              <h3 className="font-bold text-base text-gray-900">{exp.title}</h3>
+            <div key={idx} className="border-l-4 border-amber-600 pl-2 md:pl-4\">
+              <h3 className="font-bold text-sm md:text-base text-gray-900\">{exp.title}</h3>
               <p className="text-sm font-semibold text-gray-700">{exp.company}</p>
               <p className="text-xs text-gray-600 mb-2">Tenure: {exp.startDate} to {exp.endDate || 'Present'}</p>
               <p className="text-sm text-gray-700">{exp.description}</p>
@@ -64,9 +64,9 @@ export const FinanceCorporateTemplate: React.FC<FinanceCorporateTemplateProps> =
       </div>
 
       {/* Professional Skills */}
-      <div className="mb-8">
+      <div className="mb-4 md:mb-6 lg:mb-8">
         <h2 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-3 pb-2 border-b-2 border-amber-600">Professional Skills</h2>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
           {data.skills.map((skill, idx) => (
             <div key={idx} className="text-sm text-gray-700">→ {skill}</div>
           ))}
@@ -75,7 +75,7 @@ export const FinanceCorporateTemplate: React.FC<FinanceCorporateTemplateProps> =
 
       {/* Languages */}
       {data.languages && data.languages.length > 0 && (
-        <div>
+        <div className="mb-4 md:mb-6 lg:mb-8">
           <h2 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-3 pb-2 border-b-2 border-amber-600">Language Skills</h2>
           <div className="flex flex-wrap gap-3">
             {data.languages.map((lang, idx) => (

@@ -42,7 +42,7 @@ const ExperienceForm: React.FC<Props> = ({ experience, setExperiences }) => {
 
         <div>
             <div className='flex flex-col gap-4'>
-                <div className='flex justify-between'>
+                <div className='flex flex-col md:flex-row gap-4'>
                     <input
                         type="text"
                         placeholder='Nom complet'
@@ -55,11 +55,11 @@ const ExperienceForm: React.FC<Props> = ({ experience, setExperiences }) => {
                         placeholder="Nom de l'entreprise"
                         value={newExperience.companyName}
                         onChange={(e) => handleChange(e, 'companyName')}
-                        className='input input-bordered w-full ml-4'
+                        className='input input-bordered w-full'
                     />
                 </div>
 
-                <div className='flex justify-between'>
+                <div className='flex flex-col md:flex-row gap-4'>
                     <input
                         type="text"
                         placeholder='Date de début'
@@ -80,7 +80,7 @@ const ExperienceForm: React.FC<Props> = ({ experience, setExperiences }) => {
                         }}
                         value={newExperience.endDate}
                         onChange={(e) => handleChange(e, 'endDate')}
-                        className='input input-bordered w-full ml-4'
+                        className='input input-bordered w-full'
                     />
                 </div>
                 <textarea

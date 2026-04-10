@@ -69,7 +69,7 @@ export const CVModelModern = React.forwardRef<HTMLDivElement, CVModelProps>(
     return (
       <div
         ref={ref}
-        className={`flex p-16 w-[950px] h-[1200px] shadow-lg ${download ? 'mb-10' : ''}`}
+        className={`p-16 w-full md:w-[870px] lg:w-[950px] h-auto md:h-[1100px] lg:h-[1200px] shadow-lg ${download ? 'mb-10' : ''}`}
         data-theme={theme}
       >
         {/* Left Sidebar */}
@@ -240,14 +240,14 @@ export const CVModelMinimal = React.forwardRef<HTMLDivElement, CVModelProps>(
     return (
       <div
         ref={ref}
-        className={`p-16 w-[950px] h-[1200px] shadow-lg ${download ? 'mb-10' : ''}`}
+        className={`p-16 w-full md:w-[870px] lg:w-[950px] h-auto md:h-[1100px] lg:h-[1200px] shadow-lg ${download ? 'mb-10' : ''}`}
         data-theme={theme}
       >
-        <div className="max-w-4xl mx-auto">
+        <div className="w-full">
           {/* Header */}
           <div className="mb-12 border-b-2 border-base-300 pb-6">
-            <h1 className="text-5xl font-bold mb-2">{personalDetails.fullName}</h1>
-            <p className="text-2xl text-primary font-semibold mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-2">{personalDetails.fullName}</h1>
+            <p className="text-lg md:text-2xl text-primary font-semibold mb-4">
               {personalDetails.postSeeking}
             </p>
             <div className="flex gap-6 text-sm">
@@ -351,12 +351,12 @@ export const CVModelCreative = React.forwardRef<HTMLDivElement, CVModelProps>(
     return (
       <div
         ref={ref}
-        className={`p-16 w-[950px] h-[1200px] shadow-lg ${download ? 'mb-10' : ''}`}
+        className={`p-16 w-full md:w-[870px] lg:w-[950px] h-auto md:h-[1100px] lg:h-[1200px] shadow-lg ${download ? 'mb-10' : ''}`}
         data-theme={theme}
       >
-        <div className="grid grid-cols-3 gap-8 h-full">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left Column */}
-          <div className="bg-gradient-to-b from-primary to-primary/80 text-primary-content p-8 rounded-lg">
+          <div className="bg-gradient-to-b from-primary to-primary/80 text-primary-content p-8 rounded-lg md:rounded-none">
             {/* Photo */}
             {file && (
               <div className="mb-8 flex justify-center">
@@ -467,10 +467,10 @@ export const CVModelProfessional = React.forwardRef<HTMLDivElement, CVModelProps
     return (
       <div
         ref={ref}
-        className={`p-20 w-[950px] h-[1200px] shadow-lg bg-white ${download ? 'mb-10' : ''}`}
+        className={`p-20 w-full md:w-[870px] lg:w-[950px] h-auto md:h-[1100px] lg:h-[1200px] shadow-lg bg-white ${download ? 'mb-10' : ''}`}
         data-theme={theme}
       >
-        <div className="max-w-3xl">
+        <div className="w-full">
           {/* Professional Header */}
           <div className="uppercase tracking-widest mb-12">
             <h1 className="text-4xl font-black mb-2">{personalDetails.fullName}</h1>

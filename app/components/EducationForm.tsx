@@ -39,7 +39,7 @@ const EducationForm: React.FC<Props> = ({ educations, setEducations }) => {
     return (
         <div>
             <div className='flex flex-col gap-4'>
-                <div className='flex justify-between'>
+                <div className='flex flex-col md:flex-row gap-4'>
                     <input
                         type="text"
                         placeholder="Nom de l'école"
@@ -52,11 +52,11 @@ const EducationForm: React.FC<Props> = ({ educations, setEducations }) => {
                         placeholder="Diplôme"
                         value={newEducation.degree}
                         onChange={(e) => handleChange(e, 'degree')}
-                        className='input input-bordered w-full ml-4'
+                        className='input input-bordered w-full'
                     />
                 </div>
 
-                <div className='flex justify-between'>
+                <div className='flex flex-col md:flex-row gap-4'>
                     <input
                         type="text"
                         placeholder='Date de début'
@@ -77,7 +77,7 @@ const EducationForm: React.FC<Props> = ({ educations, setEducations }) => {
                         }}
                         value={newEducation.endDate}
                         onChange={(e) => handleChange(e, 'endDate')}
-                        className='input input-bordered w-full ml-4'
+                        className='input input-bordered w-full'
                     />
                 </div>
                 
