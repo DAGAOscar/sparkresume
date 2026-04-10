@@ -10,13 +10,15 @@ export function useAuth() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null)
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)
+  const [session, setSession] = useState<any>(null)
 
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession()
-        setIsLoggedIn(!!session)
-        setUser(session?.user || null)
+        const { data: { session: authSession } } = await supabase.auth.getSession()
+        setIsLoggedIn(!!authSession)
+        setUser(authSession?.user || null)
+        setSession(authSession)
       } catch (error) {
         console.error('Auth check error:', error)
         setIsLoggedIn(false)
@@ -28,13 +30,19 @@ export function useAuth() {
     checkAuth()
 
     // Subscribe to auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setIsLoggedIn(!!session)
-      setUser(session?.user || null)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, authSession) => {
+      setIsLoggedIn(!!authSession)
+      setUser(authSession?.user || null)
+      setSession(authSession)
     })
 
     return () => subscription?.unsubscribe()
   }, [])
+
+  const getAccessToken = async () => {
+    const { data: { session: authSession } } = await supabase.auth.getSession()
+    return authSession?.access_token || null
+  }
 
   const logout = async () => {
     try {
@@ -45,5 +53,5 @@ export function useAuth() {
     }
   }
 
-  return { isLoggedIn, user, loading, logout }
+  return { isLoggedIn, user, loading, logout, getAccessToken, session }
 }

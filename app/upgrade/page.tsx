@@ -8,7 +8,7 @@ import Link from 'next/link'
 import { stripePrices } from '@/app/lib/stripeService'
 
 export default function UpgradePage() {
-  const { isLoggedIn, loading, user } = useAuth()
+  const { isLoggedIn, loading, user, getAccessToken } = useAuth()
   const [isUpgrading, setIsUpgrading] = useState(false)
   const [billingPeriod, setBillingPeriod] = useState<'monthly' | 'yearly'>('monthly')
   const [upgradeMessage, setUpgradeMessage] = useState('')
@@ -29,14 +29,21 @@ export default function UpgradePage() {
     setUpgradeMessage('')
 
     try {
+      // Get access token
+      const token = await getAccessToken()
+      if (!token) {
+        throw new Error('No access token available')
+      }
+
       // Get the correct price ID based on billing period
       const priceId = period === 'monthly' ? stripePrices.monthly.priceId : stripePrices.yearly.priceId
 
-      // Call API to create checkout session
+      // Call API to create checkout session with auth token
       const response = await fetch('/api/payment/create-checkout-session', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
           priceId,
@@ -45,7 +52,8 @@ export default function UpgradePage() {
       })
 
       if (!response.ok) {
-        throw new Error('Failed to create checkout session')
+        const errorData = await response.json()
+        throw new Error(errorData.details || 'Failed to create checkout session')
       }
 
       const { sessionId } = await response.json()
@@ -54,7 +62,7 @@ export default function UpgradePage() {
       window.location.href = `https://checkout.stripe.com/pay/${sessionId}`
     } catch (error) {
       console.error('Error upgrading subscription:', error)
-      setUpgradeMessage('Failed to redirect to payment. Please try again.')
+      setUpgradeMessage(`Failed to redirect to payment. ${String(error)}`)
       setIsUpgrading(false)
     }
   }
