@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/app/lib/supabase'
+import ThemeToggle from './ThemeToggle'
 
 export default function Header() {
   const router = useRouter()
@@ -54,6 +55,7 @@ export default function Header() {
 
       {/* Desktop Menu */}
       <div className="hidden sm:flex gap-2 md:gap-4">
+        <ThemeToggle />
         <Link href="/templates" className="btn btn-ghost btn-xs md:btn-sm">
           Templates
         </Link>
@@ -62,8 +64,8 @@ export default function Header() {
         </Link>
         {isLoggedIn ? (
           <>
-            <Link href="/builder" className="btn btn-primary btn-xs md:btn-sm">
-              Build CV
+            <Link href="/templates" className="btn btn-primary btn-xs md:btn-sm">
+              Templates
             </Link>
             <Link href="/dashboard" className="btn btn-ghost btn-xs md:btn-sm">
               Dashboard
@@ -89,7 +91,8 @@ export default function Header() {
       </div>
 
       {/* Mobile Menu Button */}
-      <div className="sm:hidden">
+      <div className="sm:hidden flex gap-2">
+        <ThemeToggle />
         <button
           onClick={toggleMenu}
           className="btn btn-ghost btn-circle btn-sm"
@@ -110,8 +113,8 @@ export default function Header() {
             </Link>
             {isLoggedIn ? (
               <>
-                <Link href="/builder" className="btn btn-primary btn-sm w-full">
-                  Build CV
+                <Link href="/templates" className="btn btn-primary btn-sm w-full">
+                  Templates
                 </Link>
                 <Link href="/dashboard" className="btn btn-ghost btn-sm w-full">
                   Dashboard
