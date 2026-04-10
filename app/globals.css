@@ -22,3 +22,144 @@
     -ms-overflow-style: none; 
     scrollbar-width: none; 
 }
+
+/* THEME STYLES */
+
+/* Blue Theme (Default) */
+.theme-blue {
+    --color-primary: #3b82f6;
+    --color-primary-dark: #1e40af;
+    --color-bg: #ffffff;
+    --color-bg-secondary: #f9fafb;
+    --color-text: #1f2937;
+    --color-text-secondary: #6b7280;
+    --color-border: #e5e7eb;
+}
+
+.theme-blue {
+    color-scheme: light;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+.theme-blue .btn-primary {
+    @apply bg-blue-500 hover:bg-blue-600 border-blue-500;
+}
+
+.theme-blue a.text-primary {
+    @apply text-blue-500;
+}
+
+.theme-blue .badge-primary {
+    @apply bg-blue-500 text-white;
+}
+
+.theme-blue .divider {
+    @apply bg-gray-200;
+}
+
+/* Light Theme */
+.theme-light {
+    --color-primary: #0ea5e9;
+    --color-primary-dark: #0284c7;
+    --color-bg: #ffffff;
+    --color-bg-secondary: #f8fafc;
+    --color-text: #0f172a;
+    --color-text-secondary: #64748b;
+    --color-border: #e2e8f0;
+}
+
+.theme-light {
+    color-scheme: light;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+.theme-light .btn-primary {
+    @apply bg-sky-500 hover:bg-sky-600 border-sky-500;
+}
+
+.theme-light a.text-primary {
+    @apply text-sky-500;
+}
+
+.theme-light .badge-primary {
+    @apply bg-sky-500 text-white;
+}
+
+/* Dark Theme */
+.theme-dark {
+    --color-primary: #60a5fa;
+    --color-primary-dark: #3b82f6;
+    --color-bg: #0f172a;
+    --color-bg-secondary: #1e293b;
+    --color-text: #f1f5f9;
+    --color-text-secondary: #cbd5e1;
+    --color-border: #334155;
+}
+
+.theme-dark {
+    color-scheme: dark;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+.theme-dark body {
+    @apply bg-slate-950 text-slate-100;
+}
+
+.theme-dark .bg-base-100 {
+    @apply bg-slate-900;
+}
+
+.theme-dark .bg-gray-50 {
+    @apply bg-slate-900;
+}
+
+.theme-dark .bg-gray-100 {
+    @apply bg-slate-800;
+}
+
+.theme-dark .bg-gray-200 {
+    @apply bg-slate-700;
+}
+
+.theme-dark .text-gray-600 {
+    @apply text-slate-300;
+}
+
+.theme-dark .text-gray-700 {
+    @apply text-slate-200;
+}
+
+.theme-dark .text-gray-900 {
+    @apply text-slate-100;
+}
+
+.theme-dark .text-black {
+    @apply text-white;
+}
+
+.theme-dark .border-gray-200 {
+    @apply border-slate-700;
+}
+
+.theme-dark .shadow-md {
+    @apply shadow-slate-900;
+}
+
+.theme-dark .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 border-blue-600;
+}
+
+.theme-dark a.text-primary {
+    @apply text-blue-400;
+}
+
+.theme-dark .badge-primary {
+    @apply bg-blue-600 text-slate-100;
+}
+
+.theme-dark .divider {
+    @apply bg-slate-700;
+}

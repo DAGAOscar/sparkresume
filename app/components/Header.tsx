@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { supabase } from '@/app/lib/supabase'
-import ThemeToggle from './ThemeToggle'
+import ThemeSwitcher from '@/app/components/ThemeSwitcher'
 
 export default function Header() {
   const router = useRouter()
@@ -54,8 +54,9 @@ export default function Header() {
       </div>
 
       {/* Desktop Menu */}
-      <div className="hidden sm:flex gap-2 md:gap-4">
-        <ThemeToggle />
+      <div className="hidden sm:flex gap-2 md:gap-4 items-center">
+        <ThemeSwitcher />
+        <div className="divider divider-horizontal mx-0 h-6 my-0"></div>
         <Link href="/templates" className="btn btn-ghost btn-xs md:btn-sm">
           Templates
         </Link>
@@ -64,8 +65,8 @@ export default function Header() {
         </Link>
         {isLoggedIn ? (
           <>
-            <Link href="/templates" className="btn btn-primary btn-xs md:btn-sm">
-              Templates
+            <Link href="/builder" className="btn btn-primary btn-xs md:btn-sm">
+              Build CV
             </Link>
             <Link href="/dashboard" className="btn btn-ghost btn-xs md:btn-sm">
               Dashboard
@@ -91,8 +92,7 @@ export default function Header() {
       </div>
 
       {/* Mobile Menu Button */}
-      <div className="sm:hidden flex gap-2">
-        <ThemeToggle />
+      <div className="sm:hidden">
         <button
           onClick={toggleMenu}
           className="btn btn-ghost btn-circle btn-sm"
@@ -105,6 +105,12 @@ export default function Header() {
       {isOpen && (
         <div className="absolute top-full left-0 right-0 bg-base-100 shadow-md sm:hidden">
           <div className="flex flex-col gap-2 p-3">
+            <div className="mb-3">
+              <p className="text-sm font-semibold mb-2 px-3">Theme</p>
+              <div className="px-3">
+                <ThemeSwitcher />
+              </div>
+            </div>
             <Link href="/templates" className="btn btn-ghost btn-sm w-full">
               Templates
             </Link>
@@ -113,8 +119,8 @@ export default function Header() {
             </Link>
             {isLoggedIn ? (
               <>
-                <Link href="/templates" className="btn btn-primary btn-sm w-full">
-                  Templates
+                <Link href="/builder" className="btn btn-primary btn-sm w-full">
+                  Build CV
                 </Link>
                 <Link href="/dashboard" className="btn btn-ghost btn-sm w-full">
                   Dashboard

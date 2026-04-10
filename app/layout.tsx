@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Plus_Jakarta_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import ThemeProvider from "@/app/components/ThemeProvider";
+import { ThemeProvider } from "@/app/contexts/ThemeContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,11 +39,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="business">
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${plusJakarta.variable} ${playfairDisplay.variable} antialiased`}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
