@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS profiles (
   subscription_tier TEXT DEFAULT 'free',
   pdf_downloads_count INTEGER DEFAULT 0,
   subscription_expires_at TIMESTAMP WITH TIME ZONE,
+  stripe_customer_id TEXT,
+  stripe_subscription_id TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
