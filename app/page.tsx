@@ -152,20 +152,47 @@ export default function Home() {
           </p>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {[1,2,3,4,5,6,7,8].map(i => (
-              <div key={i} className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition">
-                <div className="aspect-[210/297] bg-gradient-to-br from-blue-50 to-purple-50 flex items-center justify-center">
-                  <div className="text-4xl">📋</div>
+            {[
+              { id: 1, icon: '📄', name: 'Classic' },
+              { id: 2, icon: '🎨', name: 'Modern' },
+              { id: 3, icon: '💼', name: 'Executive' },
+              { id: 4, icon: '🚀', name: 'Startup' },
+              { id: 5, icon: '✨', name: 'Elegant' },
+              { id: 6, icon: '🎯', name: 'Target' },
+              { id: 7, icon: '🌟', name: 'Premium' },
+              { id: 8, icon: '🔥', name: 'Creative' },
+            ].map((template, i) => (
+              <Link 
+                key={template.id} 
+                href="/templates"
+                className="group cursor-pointer"
+              >
+                <div className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 animate-in fade-in fill-mode-forwards"
+                  style={{
+                    animationDelay: `${i * 50}ms`,
+                    animationDuration: '0.6s'
+                  }}
+                >
+                  <div className="aspect-[210/297] bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 flex items-center justify-center group-hover:from-blue-100 group-hover:via-purple-100 group-hover:to-pink-100 transition-all duration-300">
+                    <div className="text-6xl transform group-hover:scale-125 transition-transform duration-300 group-hover:rotate-12">
+                      {template.icon}
+                    </div>
+                  </div>
+                  <div className="p-4 text-center">
+                    <p className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors duration-200">
+                      {template.name}
+                    </p>
+                    <p className="text-xs text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                      Click to view
+                    </p>
+                  </div>
                 </div>
-                <div className="p-4 text-center">
-                  <p className="font-semibold text-gray-900">Template {i}</p>
-                </div>
-              </div>
+              </Link>
             ))}
           </div>
 
-          <div className="text-center mt-12">
-            <Link href="/templates" className="text-black font-bold text-lg hover:underline">
+          <div className="text-center mt-12 animate-bounce">
+            <Link href="/templates" className="inline-block text-black font-bold text-lg hover:underline hover:text-blue-600 transition-colors duration-200 transform hover:translate-x-2">
               View all templates →
             </Link>
           </div>
