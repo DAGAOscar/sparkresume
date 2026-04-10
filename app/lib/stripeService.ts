@@ -1,12 +1,14 @@
-let stripe: any = null
+import type Stripe from 'stripe'
 
-function getStripe() {
+let stripe: Stripe | null = null
+
+async function getStripe(): Promise<Stripe> {
   if (!stripe) {
     if (!process.env.STRIPE_SECRET_KEY) {
       throw new Error('Missing STRIPE_SECRET_KEY environment variable')
     }
-    // Lazy import Stripe only when needed
-    const Stripe = require('stripe').default
+    // Dynamic import to avoid module-level evaluation issues
+    const { default: Stripe } = await import('stripe')
     stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
       typescript: true,
     })
@@ -26,7 +28,8 @@ export const stripeService = {
     plan: 'monthly' | 'yearly'
   ) {
     try {
-      const session = await getStripe().checkout.sessions.create({
+      const stripeInstance = await getStripe()
+      const session = await stripeInstance.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items: [
           {
@@ -59,7 +62,8 @@ export const stripeService = {
    */
   async retrieveSession(sessionId: string) {
     try {
-      const session = await getStripe().checkout.sessions.retrieve(sessionId)
+      const stripeInstance = await getStripe()
+      const session = await stripeInstance.checkout.sessions.retrieve(sessionId)
       return session
     } catch (error) {
       console.error('Error retrieving session:', error)
@@ -70,9 +74,10 @@ export const stripeService = {
   /**
    * Construct webhook event from raw body and signature
    */
-  constructEvent(body: string, signature: string, secret: string) {
+  async constructEvent(body: string, signature: string, secret: string) {
     try {
-      return getStripe().webhooks.constructEvent(body, signature, secret)
+      const stripeInstance = await getStripe()
+      return stripeInstance.webhooks.constructEvent(body, signature, secret)
     } catch (error) {
       console.error('Error verifying webhook signature:', error)
       throw error
@@ -84,7 +89,8 @@ export const stripeService = {
    */
   async retrieveCustomer(customerId: string) {
     try {
-      return await getStripe().customers.retrieve(customerId)
+      const stripeInstance = await getStripe()
+      return await stripeInstance.customers.retrieve(customerId)
     } catch (error) {
       console.error('Error retrieving customer:', error)
       throw error
@@ -96,7 +102,8 @@ export const stripeService = {
    */
   async retrieveSubscription(subscriptionId: string) {
     try {
-      return await getStripe().subscriptions.retrieve(subscriptionId)
+      const stripeInstance = await getStripe()
+      return await stripeInstance.subscriptions.retrieve(subscriptionId)
     } catch (error) {
       console.error('Error retrieving subscription:', error)
       throw error
@@ -108,7 +115,8 @@ export const stripeService = {
    */
   async createCustomer(email: string, userId: string) {
     try {
-      return await getStripe().customers.create({
+      const stripeInstance = await getStripe()
+      return await stripeInstance.customers.create({
         email,
         metadata: {
           userId,

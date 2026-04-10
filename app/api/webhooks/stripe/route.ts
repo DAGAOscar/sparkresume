@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     // Verify webhook signature
     let event: Stripe.Event
     try {
-      event = stripeService.constructEvent(
+      event = await stripeService.constructEvent(
         body,
         signature,
         process.env.STRIPE_WEBHOOK_SECRET
