@@ -276,3 +276,54 @@ body.theme-dark {
 * {
     transition: background-color 200ms, color 200ms, border-color 200ms;
 }
+
+/* ==================== BLACK & WHITE EDITOR MODE ==================== */
+/* Force templates editor to use pure black and white only */
+
+.bw-editor,
+.bw-editor * {
+    background-color: white !important;
+    color: black !important;
+    border-color: #333333 !important;
+}
+
+.bw-editor input,
+.bw-editor textarea,
+.bw-editor select {
+    background-color: white !important;
+    color: black !important;
+    border-color: #999999 !important;
+}
+
+.bw-editor input::placeholder,
+.bw-editor textarea::placeholder {
+    color: #666666 !important;
+}
+
+.bw-editor button {
+    color: black !important;
+    background-color: white !important;
+    border-color: black !important;
+}
+
+.bw-editor button:hover {
+    background-color: #f0f0f0 !important;
+}
+
+.bw-editor .bg-blue-50,
+.bw-editor .bg-green-50,
+.bw-editor .bg-purple-50,
+.bw-editor .bg-orange-50,
+.bw-editor .bg-indigo-50,
+.bw-editor .bg-gray-50,
+.bw-editor .bg-white {
+    background-color: #f5f5f5 !important;
+}
+
+.bw-editor button[class*="hover:bg-"] {
+    background-color: white !important;
+}
+
+.bw-editor button[class*="hover:bg-"]:hover {
+    background-color: #eeeeee !important;
+}

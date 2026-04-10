@@ -79,12 +79,12 @@ export default function TemplatesEditorPage() {
   });
 
   return (
-    <>
+    <div className="bw-editor">
       <Header />
       <EditableCVBuilder
         initialData={cvData}
         onDataChange={(newData) => setCvData(newData)}
       />
-    </>
+    </div>
   );
 }
