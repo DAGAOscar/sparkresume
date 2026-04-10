@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react'
 
-type Theme = 'blue' | 'light' | 'dark'
+type Theme = 'light' | 'dark'
 
 interface ThemeContextType {
   theme: Theme
@@ -12,7 +12,7 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('blue')
+  const [theme, setTheme] = useState<Theme>('light')
   const [mounted, setMounted] = useState(false)
 
   // Load theme from localStorage on mount
@@ -22,7 +22,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setTheme(savedTheme)
       applyTheme(savedTheme)
     } else {
-      applyTheme('blue')
+      applyTheme('light')
     }
     setMounted(true)
   }, [])
@@ -32,7 +32,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const html = document.documentElement
     
     // Remove all theme classes
-    html.classList.remove('theme-blue', 'theme-light', 'theme-dark')
+    html.classList.remove('theme-light', 'theme-dark')
     
     // Add new theme class
     html.classList.add(`theme-${newTheme}`)
@@ -62,7 +62,7 @@ export function useTheme() {
   if (undefined === context) {
     // Return a default value during SSR
     return {
-      theme: 'blue' as const,
+      theme: 'light' as const,
       setTheme: () => {},
     }
   }

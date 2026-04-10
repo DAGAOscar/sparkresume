@@ -1,7 +1,7 @@
 'use client'
 
 import { useTheme } from '@/app/contexts/ThemeContext'
-import { Moon, Sun, Palette } from 'lucide-react'
+import { Moon, Sun } from 'lucide-react'
 import { useState, useEffect } from 'react'
 
 export default function ThemeSwitcher() {
@@ -17,25 +17,14 @@ export default function ThemeSwitcher() {
   }
 
   return (
-    <div className="flex items-center gap-2">
-      <button
-        onClick={() => setTheme('blue')}
-        title="Blue Mode"
-        className={`p-2 rounded-lg transition-colors ${
-          theme === 'blue'
-            ? 'bg-blue-500 text-white'
-            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-        }`}
-      >
-        <Palette className="w-5 h-5" />
-      </button>
+    <div className="flex items-center gap-2 bg-gray-100 dark:bg-slate-800 rounded-lg p-1">
       <button
         onClick={() => setTheme('light')}
         title="Light Mode"
-        className={`p-2 rounded-lg transition-colors ${
+        className={`p-2 rounded-md transition-colors ${
           theme === 'light'
-            ? 'bg-gray-700 text-white'
-            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            ? 'bg-white text-amber-500 shadow-md'
+            : 'text-gray-600 hover:text-gray-900'
         }`}
       >
         <Sun className="w-5 h-5" />
@@ -43,10 +32,10 @@ export default function ThemeSwitcher() {
       <button
         onClick={() => setTheme('dark')}
         title="Dark Mode"
-        className={`p-2 rounded-lg transition-colors ${
+        className={`p-2 rounded-md transition-colors ${
           theme === 'dark'
-            ? 'bg-gray-900 text-white'
-            : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            ? 'bg-slate-700 text-blue-400 shadow-md'
+            : 'text-gray-600 hover:text-gray-900'
         }`}
       >
         <Moon className="w-5 h-5" />
