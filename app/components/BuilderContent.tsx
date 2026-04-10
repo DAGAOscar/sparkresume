@@ -362,7 +362,7 @@ export function BuilderContent() {
       
       {/* Desktop View - 2 Column Layout */}
       <div className="hidden lg:block">
-        <section className="flex items-center min-h-screen">
+        <section className="flex min-h-screen">
 
           <div className="w-1/3 h-screen p-6 lg:p-10 bg-base-200 scrollable no-scrollbar overflow-y-auto">
             <div className="mb-4 flex justify-between items-center sticky top-0 bg-base-200 z-10 pb-4">
