@@ -23,7 +23,6 @@ export const ContactLinks: React.FC<ContactLinksProps> = ({ links = [], classNam
               rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-800 underline"
             >
-              {link.icon && <span className="mr-1">{link.icon}</span>}
               {link.label}
             </a>
           </span>
@@ -43,7 +42,6 @@ export const ContactLinks: React.FC<ContactLinksProps> = ({ links = [], classNam
           rel="noopener noreferrer"
           className="text-blue-600 hover:text-blue-800 underline block"
         >
-          {link.icon && <span className="mr-1">{link.icon}</span>}
           {link.label}
         </a>
       ))}
