@@ -34,29 +34,29 @@
     --color-secondary: #0891b2;
     --color-accent: #f59e0b;
     background-color: #ffffff;
-    color: #1f2937;
+    color: #000000;
 }
 
 /* Light mode - text colors */
 .theme-light .text-black,
 .theme-light .text-gray-900 {
-    color: #111827;
+    color: #000000;
 }
 
 .theme-light .text-white {
-    color: #f9fafb;
+    color: #000000;
 }
 
 .theme-light .text-gray-600 {
-    color: #4b5563;
+    color: #1a1a1a;
 }
 
 .theme-light .text-gray-700 {
-    color: #374151;
+    color: #000000;
 }
 
 .theme-light .text-gray-500 {
-    color: #6b7280;
+    color: #333333;
 }
 
 /* Light mode - buttons */
@@ -101,12 +101,12 @@
 }
 
 .theme-light .theme-blue-hero h1 {
-    color: #1f2937;
+    color: #000000;
 }
 
 .theme-light .theme-blue-hero p,
 .theme-light .theme-blue-hero .text-gray-600 {
-    color: #6b7280;
+    color: #1a1a1a;
 }
 
 /* ==================== DARK MODE ==================== */
