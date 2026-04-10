@@ -111,18 +111,18 @@ export const stripeService = {
   },
 }
 
-// Stripe product and price IDs (Replace with your actual IDs)
+// Stripe product and price IDs
 export const stripePrices = {
   monthly: {
-    productId: 'prod_test_monthly',
-    priceId: 'price_test_monthly', // Replace with actual Stripe price ID
-    amount: 499, // $4.99 USD in cents
+    productId: 'prod_UJJxfwXA34uEsD',
+    priceId: 'price_1TKhJuGYkMKHdQzhMrICt2VW',
+    amount: 100, // $1.00 USD in cents
     interval: 'month',
   },
   yearly: {
-    productId: 'prod_test_yearly',
-    priceId: 'price_test_yearly', // Replace with actual Stripe price ID
-    amount: 3999, // $39.99 USD in cents
+    productId: 'prod_UJK06Elc7tzzLr',
+    priceId: 'price_1TKhMaGYkMKHdQzhOdRGRVoR',
+    amount: 1000, // $10.00 USD in cents
     interval: 'year',
   },
 }

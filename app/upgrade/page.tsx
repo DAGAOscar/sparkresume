@@ -26,17 +26,17 @@ export default function UpgradePage() {
 
   const pricing = {
     monthly: {
-      price: 4.99,
+      price: 1.00,
       period: 'month',
-      description: '$4.99 USD per month',
+      description: '$1.00 USD per month',
       durationDays: 30
     },
     yearly: {
-      price: 39.99,
+      price: 10.00,
       period: 'year',
-      description: '$39.99 USD per year',
+      description: '$10.00 USD per year',
       durationDays: 365,
-      save: '33%'
+      save: '17%'
     }
   }
 
@@ -187,7 +187,7 @@ export default function UpgradePage() {
                 <h2 className="card-title text-2xl">Premium</h2>
                 <p className="opacity-90 mb-4">Accès complet</p>
                 <div className="text-4xl font-bold mb-6">
-                  ${billingPeriod === 'monthly' ? '4.99' : '39.99'}
+                  ${billingPeriod === 'monthly' ? '1.00' : '10.00'}
                   <span className="text-lg opacity-90">/{billingPeriod === 'monthly' ? 'mois' : 'an'}</span>
                 </div>
                 <ul className="space-y-3 mb-6">

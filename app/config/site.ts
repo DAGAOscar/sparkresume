@@ -31,9 +31,9 @@ export const siteConfig = {
       premium: Infinity
     },
     pricing: {
-      monthly: 4.99,
-      yearly: 39.99,
-      yearlyDiscount: '33%'
+      monthly: 1.00,
+      yearly: 10.00,
+      yearlyDiscount: '17%' // (10 vs 12 if paying monthly)
     }
   }
 }
