@@ -44,18 +44,6 @@ export default function Dashboard() {
     );
   }
 
-  // Handle create new CV
-  const handleCreateCV = async () => {
-    const name = prompt('Enter CV name:', 'My CV');
-    if (name) {
-      const newCV = await addCV(name);
-      if (newCV) {
-        // Redirect to builder with the new CV ID
-        window.location.href = `/builder?id=${newCV.id}`;
-      }
-    }
-  }
-
   // Handle delete CV
   const handleDeleteCV = async (cvId: string) => {
     if (confirm('Are you sure you want to delete this CV?')) {
@@ -78,14 +66,13 @@ export default function Dashboard() {
 
           {/* Create New CV Button */}
           <div className="mb-6 sm:mb-8">
-            <button 
-              onClick={handleCreateCV}
-              disabled={cvLoading}
+            <Link 
+              href="/templates"
               className="btn btn-primary btn-sm sm:btn-md md:btn-lg gap-2"
             >
-              {cvLoading ? <span className="loading loading-spinner loading-sm"></span> : <Plus className="w-4" />}
-              Create New CV
-            </button>
+              <Plus className="w-4" />
+              Create New Resume
+            </Link>
           </div>
 
           {/* Stats Section */}
@@ -173,12 +160,12 @@ export default function Dashboard() {
             ) : (
               <div className="card bg-base-100 shadow text-center py-8 sm:py-12">
                 <p className="text-gray-600 mb-4 text-sm sm:text-base">You haven&apos;t created any CVs yet</p>
-                <button 
-                  onClick={handleCreateCV}
+                <Link 
+                  href="/templates"
                   className="btn btn-primary btn-sm sm:btn-md"
                 >
-                  Create Your First CV
-                </button>
+                  Create Your First Resume
+                </Link>
               </div>
             )}
           </div>
