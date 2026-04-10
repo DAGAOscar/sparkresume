@@ -57,6 +57,9 @@ export default function Header() {
         <Link href="/templates" className="btn btn-ghost btn-xs md:btn-sm">
           Templates
         </Link>
+        <Link href="/contact" className="btn btn-ghost btn-xs md:btn-sm">
+          Contact
+        </Link>
         {isLoggedIn ? (
           <>
             <Link href="/builder" className="btn btn-primary btn-xs md:btn-sm">
@@ -101,6 +104,9 @@ export default function Header() {
           <div className="flex flex-col gap-2 p-3">
             <Link href="/templates" className="btn btn-ghost btn-sm w-full">
               Templates
+            </Link>
+            <Link href="/contact" className="btn btn-ghost btn-sm w-full">
+              Contact
             </Link>
             {isLoggedIn ? (
               <>
