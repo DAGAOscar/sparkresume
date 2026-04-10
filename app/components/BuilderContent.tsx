@@ -2,11 +2,14 @@
 import { Eye, RotateCw, Save, Trash2, Palette, LogIn } from "lucide-react";
 import PersonalDetailsForm from "./PersonalDetailsForm";
 import LinksForm from "./LinksForm";
+import { DownloadLimitModal } from "./DownloadLimitModal";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Education, Experience, Hobby, Language, PersonalDetails, Skill, SocialLink } from "@/type";
 import { useAuth } from "@/app/hooks/useAuth";
+import { useSubscription } from "@/app/hooks/useSubscription";
 import { createCV, getCVData, saveCVData } from "@/app/lib/cvService";
+import { trackPdfDownload } from "@/app/lib/subscriptionService";
 import { educationsPreset, experiencesPreset, hobbiesPreset, languagesPreset, personalDetailsPreset, skillsPreset } from "@/presets";
 import ExperienceForm from "./ExperienceForm";
 import EducationForm from "./EducationForm";
@@ -47,6 +50,10 @@ export function BuilderContent() {
   const [templateId, setTemplateId] = useState<number>(1)
   const [useTextTemplate, setUseTextTemplate] = useState<boolean>(false)
   const [cvModel, setCvModel] = useState<string>('modern')
+
+  // Subscription and download limit management
+  const { remainingDownloads, canDownload, refreshSubscription } = useSubscription()
+  const [showDownloadModal, setShowDownloadModal] = useState(false)
 
   // Check authentication on mount
   useEffect(() => {
@@ -265,6 +272,12 @@ export function BuilderContent() {
   const cvPreviewRef = useRef(null)
 
   const handleDownloadPdf = async () => {
+    // Check subscription limit first
+    if (!canDownload) {
+      setShowDownloadModal(true)
+      return
+    }
+
     const element = cvPreviewRef.current
     if (element) {
       try {
@@ -285,6 +298,13 @@ export function BuilderContent() {
 
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
         pdf.save(`cv.pdf`)
+
+        // Track the download for subscription counting
+        if (cvId) {
+          await trackPdfDownload(cvId, 'cv.pdf')
+          // Refresh subscription data to update remaining downloads
+          await refreshSubscription()
+        }
 
         const modal = document.getElementById('my_modal_3') as HTMLDialogElement
         if (modal) {
@@ -673,6 +693,18 @@ export function BuilderContent() {
             </div>
           </div>
         </dialog>
+
+      {/* Download Limit Modal - Subscription Management */}
+      <DownloadLimitModal
+        isOpen={showDownloadModal}
+        downloadsUsed={2 - remainingDownloads}
+        remainingDownloads={remainingDownloads}
+        onUpgrade={() => {
+          setShowDownloadModal(false)
+          router.push('/upgrade')
+        }}
+        onClose={() => setShowDownloadModal(false)}
+      />
       </div>
 
       {/* Tablet and Mobile View */}

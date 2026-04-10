@@ -17,6 +17,9 @@ CREATE TABLE IF NOT EXISTS profiles (
   email TEXT UNIQUE NOT NULL,
   full_name TEXT,
   avatar_url TEXT,
+  subscription_tier TEXT DEFAULT 'free',
+  pdf_downloads_count INTEGER DEFAULT 0,
+  subscription_expires_at TIMESTAMP WITH TIME ZONE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
@@ -55,7 +58,16 @@ CREATE TABLE IF NOT EXISTS cv_data (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
--- 4. Create templates usage tracking table
+-- 4. Create PDF downloads tracking table
+CREATE TABLE IF NOT EXISTS pdf_downloads (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE NOT NULL,
+  cv_id UUID REFERENCES cvs(id) ON DELETE CASCADE NOT NULL,
+  file_name TEXT,
+  downloaded_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 5. Create templates usage tracking table
 CREATE TABLE IF NOT EXISTS templates_used (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES profiles(id) ON DELETE CASCADE NOT NULL,
@@ -73,6 +85,7 @@ CREATE TABLE IF NOT EXISTS templates_used (
 ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cvs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cv_data ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pdf_downloads ENABLE ROW LEVEL SECURITY;
 ALTER TABLE templates_used ENABLE ROW LEVEL SECURITY;
 
 -- 2. Profiles: Users can only read/update their own profile
@@ -170,6 +183,18 @@ CREATE POLICY "Users can update their template usage"
   USING (auth.uid() = user_id)
   WITH CHECK (auth.uid() = user_id);
 
+-- 6. PDF Downloads: Users can only access their own download history
+DROP POLICY IF EXISTS "Users can view their PDF downloads" ON pdf_downloads;
+DROP POLICY IF EXISTS "Users can create PDF download records" ON pdf_downloads;
+
+CREATE POLICY "Users can view their PDF downloads"
+  ON pdf_downloads FOR SELECT
+  USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can create PDF download records"
+  ON pdf_downloads FOR INSERT
+  WITH CHECK (auth.uid() = user_id);
+
 -- ============================================
 -- Indexes for better performance
 -- ============================================
@@ -177,6 +202,8 @@ CREATE POLICY "Users can update their template usage"
 CREATE INDEX IF NOT EXISTS idx_cvs_user_id ON cvs(user_id);
 CREATE INDEX IF NOT EXISTS idx_cvs_created_at ON cvs(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_cv_data_cv_id ON cv_data(cv_id);
+CREATE INDEX IF NOT EXISTS idx_pdf_downloads_user_id ON pdf_downloads(user_id);
+CREATE INDEX IF NOT EXISTS idx_pdf_downloads_downloaded_at ON pdf_downloads(downloaded_at DESC);
 CREATE INDEX IF NOT EXISTS idx_templates_used_user_id ON templates_used(user_id);
 CREATE INDEX IF NOT EXISTS idx_templates_used_last_used ON templates_used(last_used DESC);
 
