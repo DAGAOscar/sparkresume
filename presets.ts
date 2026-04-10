@@ -7,8 +7,17 @@ export const personalDetailsPreset: PersonalDetails = {
     address: 'Warsaw, Poland',
     photoUrl: '/profile.jpg',
     postSeeking: 'Cloud Engineer',
-    description: 'Experienced Cloud Engineer with a strong background in designing and deploying scalable cloud infrastructure. Specializing in AWS, Azure, and Kubernetes. Passionate about DevOps practices, automation, and helping teams build robust, secure, and efficient cloud solutions.'
-    
+    description: 'Experienced Cloud Engineer with a strong background in designing and deploying scalable cloud infrastructure. Specializing in AWS, Azure, and Kubernetes. Passionate about DevOps practices, automation, and helping teams build robust, secure, and efficient cloud solutions.',
+    links: [
+        {
+            label: 'LinkedIn',
+            url: 'https://linkedin.com/in/oscardaga',
+        },
+        {
+            label: 'Credly',
+            url: 'https://credly.com/users/oscardaga',
+        }
+    ]
 };
 
 export const experiencesPreset: Experience[] = [

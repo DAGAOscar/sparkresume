@@ -1,9 +1,10 @@
 "use client"
 import { Eye, RotateCw, Save, Trash2, Palette, LogIn } from "lucide-react";
 import PersonalDetailsForm from "./PersonalDetailsForm";
+import LinksForm from "./LinksForm";
 import { useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Education, Experience, Hobby, Language, PersonalDetails, Skill } from "@/type";
+import { Education, Experience, Hobby, Language, PersonalDetails, Skill, SocialLink } from "@/type";
 import { useAuth } from "@/app/hooks/useAuth";
 import { createCV, getCVData, saveCVData } from "@/app/lib/cvService";
 import { educationsPreset, experiencesPreset, hobbiesPreset, languagesPreset, personalDetailsPreset, skillsPreset } from "@/presets";
@@ -116,6 +117,7 @@ export function BuilderContent() {
       phone: personalDetails.phone || '',
       location: personalDetails.address || '',
       summary: personalDetails.description || '',
+      links: personalDetails.links || [],
       experience: experiences.map(exp => ({
         title: exp.jobTitle,
         company: exp.companyName,
@@ -405,6 +407,11 @@ export function BuilderContent() {
                 personalDetails={personalDetails}
                 setPersonalDetails={setPersonalDetails}
                 setFile={setFile}
+              />
+
+              <LinksForm
+                links={personalDetails.links || []}
+                setLinks={(links: SocialLink[]) => setPersonalDetails({ ...personalDetails, links })}
               />
 
               <div className="flex justify-between items-center">
@@ -742,6 +749,11 @@ export function BuilderContent() {
                 personalDetails={personalDetails}
                 setPersonalDetails={setPersonalDetails}
                 setFile={setFile}
+              />
+
+              <LinksForm
+                links={personalDetails.links || []}
+                setLinks={(links: SocialLink[]) => setPersonalDetails({ ...personalDetails, links })}
               />
             </div>
 

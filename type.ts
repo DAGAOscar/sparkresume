@@ -1,3 +1,9 @@
+export type SocialLink = {
+    id?: string;
+    label: string;
+    url: string;
+};
+
 export type PersonalDetails = {
     id?: string;
     fullName: string;
@@ -7,6 +13,7 @@ export type PersonalDetails = {
     photoUrl?: string;
     description?: string;
     postSeeking?: string;
+    links?: SocialLink[];
 };
 
 
