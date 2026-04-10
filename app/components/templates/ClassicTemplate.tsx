@@ -11,10 +11,10 @@ interface ClassicTemplateProps {
 
 export const ClassicTemplate: React.FC<ClassicTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-black p-8 font-serif" style={{ fontFamily: 'Georgia, serif' }}>
+    <div className="w-full bg-white text-black p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Header */}
       <div className="mb-6 pb-6 border-b-2 border-black">
-        <h1 className="text-4xl font-bold mb-2">{data.name}</h1>
+        <h1 className="text-4xl font-bold mb-2" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.5px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-3 items-center text-xs">
           <div className="flex items-center gap-1">
             <Mail size={14} />

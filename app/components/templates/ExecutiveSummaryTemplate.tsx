@@ -12,10 +12,10 @@ interface ExecutiveSummaryTemplateProps {
 
 export const ExecutiveSummaryTemplate: React.FC<ExecutiveSummaryTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-gray-900 p-8 font-serif" style={{ fontFamily: 'Georgia, serif' }}>
+    <div className="w-full bg-white text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Header */}
       <div className="text-center mb-8 pb-6 border-b-4 border-teal-600">
-        <h1 className="text-3xl font-bold mb-4 text-teal-700">{data.name}</h1>
+        <h1 className="text-3xl font-bold mb-4 text-teal-700" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.4px' }}>{data.name}</h1>
         <div className="flex justify-center gap-6 items-center text-sm text-gray-600">
           <div className="flex items-center gap-2">
             <span>{data.email}</span>

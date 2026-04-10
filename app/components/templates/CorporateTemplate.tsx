@@ -12,10 +12,10 @@ interface CorporateTemplateProps {
 
 export const CorporateTemplate: React.FC<CorporateTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-gray-900 p-8 font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <div className="w-full bg-white text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Header Background */}
-      <div className="bg-gray-900 text-white p-8 mb-8 -mx-8 -mt-8 mb-8">
-        <h1 className="text-4xl font-bold mb-4">{data.name}</h1>
+      <div className="bg-gray-900 text-white p-8 mb-8 -mx-8 -mt-8" style={{ marginBottom: '32px' }}>
+        <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.5px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-3 items-center text-xs">
           <div className="flex items-center gap-1">
             <Mail size={14} />
@@ -36,7 +36,7 @@ export const CorporateTemplate: React.FC<CorporateTemplateProps> = ({ data }) =>
       {/* Summary */}
       {data.summary && (
         <div className="mb-8">
-          <h2 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-4 pb-2 border-b-2 border-gray-900">Professional Summary</h2>
+          <h2 className="text-xs font-bold text-gray-900 uppercase tracking-widest mb-4 pb-2 border-b-2 border-gray-900" style={{ fontFamily: 'var(--font-plus-jakarta)' }}>Professional Summary</h2>
           <p className="text-sm leading-relaxed text-gray-700">{data.summary}</p>
         </div>
       )}

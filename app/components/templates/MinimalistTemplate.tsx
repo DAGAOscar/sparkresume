@@ -11,10 +11,10 @@ interface MinimalistTemplateProps {
 
 export const MinimalistTemplate: React.FC<MinimalistTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-gray-900 p-8 font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <div className="w-full bg-white text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-light mb-1 tracking-tight">{data.name}</h1>
+        <h1 className="text-3xl font-light mb-1 tracking-tight" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 400, letterSpacing: '-0.3px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-4 text-xs text-gray-600">
           <span>{data.email}</span>
           <span>•</span>

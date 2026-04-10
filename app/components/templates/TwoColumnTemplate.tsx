@@ -12,10 +12,10 @@ interface TwoColumnTemplateProps {
 
 export const TwoColumnTemplate: React.FC<TwoColumnTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-gray-900 flex font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <div className="w-full bg-white text-gray-900 flex" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Left Column - Sidebar */}
       <div className="w-1/3 bg-gradient-to-b from-blue-600 to-blue-700 text-white p-8">
-        <h1 className="text-3xl font-bold mb-1">{data.name}</h1>
+        <h1 className="text-3xl font-bold mb-1" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.4px' }}>{data.name}</h1>
         <p className="text-blue-100 text-sm mb-8">Professional</p>
 
         {/* Contact */}

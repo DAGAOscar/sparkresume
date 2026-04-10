@@ -12,10 +12,10 @@ interface SoftwareEngineerTemplateProps {
 
 export const SoftwareEngineerTemplate: React.FC<SoftwareEngineerTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-gray-900 p-8 font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <div className="w-full bg-white text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold text-blue-700 mb-2">{data.name}</h1>
+        <h1 className="text-4xl font-bold text-blue-700 mb-2" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.5px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-4 items-center text-sm text-gray-700">
           <div className="flex items-center gap-2">
             <Mail size={16} className="text-blue-600" />

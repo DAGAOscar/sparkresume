@@ -12,10 +12,10 @@ interface ModernTemplateProps {
 
 export const ModernTemplate: React.FC<ModernTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-gray-900 p-8 font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <div className="w-full bg-white text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-5xl font-bold mb-1 text-blue-600">{data.name}</h1>
+        <h1 className="text-5xl font-bold mb-1 text-blue-600" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.8px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-6 text-sm text-gray-600 mt-4 items-center">
           <div className="flex items-center gap-2">
             <Mail size={16} className="text-blue-600" />

@@ -12,10 +12,10 @@ interface FinanceCorporateTemplateProps {
 
 export const FinanceCorporateTemplate: React.FC<FinanceCorporateTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-white text-gray-900 p-8 font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <div className="w-full bg-white text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Header with Background */}
       <div className="bg-gray-800 text-white p-6 mb-8 -mx-8 -mt-8 px-8 mb-8">
-        <h1 className="text-3xl font-bold mb-3">{data.name}</h1>
+        <h1 className="text-3xl font-bold mb-3" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.4px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-4 items-center text-sm text-gray-700">
           <div className="flex items-center gap-2">
             <Mail size={16} />

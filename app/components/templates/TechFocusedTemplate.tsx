@@ -12,10 +12,10 @@ interface TechFocusedTemplateProps {
 
 export const TechFocusedTemplate: React.FC<TechFocusedTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-gradient-to-br from-slate-900 to-slate-800 text-white p-8 font-mono" style={{ fontFamily: '"Courier New", monospace' }}>
+    <div className="w-full bg-gradient-to-br from-slate-900 to-slate-800 text-white p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Header */}
       <div className="mb-8 pb-6 border-b border-cyan-500">
-        <h1 className="text-4xl font-bold text-cyan-400 mb-3">{data.name}</h1>
+        <h1 className="text-4xl font-bold text-cyan-400 mb-3" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.5px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-4 items-center text-sm text-gray-700">
           <div className="flex items-center gap-2">
             <Mail size={16} className="text-cyan-400" />

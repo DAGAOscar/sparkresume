@@ -12,10 +12,10 @@ interface CreativePortfolioTemplateProps {
 
 export const CreativePortfolioTemplate: React.FC<CreativePortfolioTemplateProps> = ({ data }) => {
   return (
-    <div className="w-full bg-gradient-to-b from-indigo-900 via-white to-white text-gray-900 p-8 font-sans" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }}>
+    <div className="w-full bg-gradient-to-b from-indigo-900 via-white to-white text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Decorative Header */}
       <div className="text-center mb-8 pb-8 bg-gradient-to-r from-indigo-500 to-purple-500 text-white p-6 rounded-lg">
-        <h1 className="text-4xl font-bold mb-4">{data.name}</h1>
+        <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.5px' }}>{data.name}</h1>
         <p className="text-indigo-100 mb-4">Creative Professional</p>
         <div className="flex flex-wrap gap-4 items-center text-sm text-gray-700">
           <div className="flex items-center gap-2">
