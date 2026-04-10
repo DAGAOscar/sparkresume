@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { CVData } from '@/app/utils/templates';
-import { ContactLinks } from './ContactLinks';import { SectionRenderer } from './SectionRenderer';import { Mail, Phone, MapPin, Award } from 'lucide-react';
+import { ContactLinks } from './ContactLinks';import { SectionRenderer } from './SectionRenderer';
 
 interface HealthcareTemplateProps {
   data: CVData;
@@ -15,19 +15,12 @@ export const HealthcareTemplate: React.FC<HealthcareTemplateProps> = ({ data }) 
       <div className="mb-8 pb-6 border-b-4 border-emerald-600">
         <h1 className="text-4xl font-bold text-emerald-700 mb-3" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.5px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-4 items-center text-sm text-gray-700">
-          <div className="flex items-center gap-2">
-            <Mail size={16} className="text-emerald-600" />
-            <span>{data.email}</span>
-            <ContactLinks links={data.links} inline className="text-sm" />
-          </div>
-          <div className="flex items-center gap-2">
-            <Phone size={16} className="text-emerald-600" />
-            <span>{data.phone}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin size={16} className="text-emerald-600" />
-            <span>{data.location}</span>
-          </div>
+          <span>{data.email}</span>
+          <span>•</span>
+          <span>{data.phone}</span>
+          <span>•</span>
+          <span>{data.location}</span>
+          <ContactLinks links={data.links} inline className="text-sm" />
         </div>
       </div>
 
@@ -101,12 +94,12 @@ export const HealthcareTemplate: React.FC<HealthcareTemplateProps> = ({ data }) 
       {/* Certifications */}
       {data.certifications && data.certifications.length > 0 && (
         <div className="border-t-2 border-emerald-200 pt-6">
-          <h2 className="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-3 flex items-center gap-2">
-            <Award size={16} /> Certifications & Licenses
+          <h2 className="text-sm font-bold text-emerald-600 uppercase tracking-widest mb-3">
+            Certifications & Licenses
           </h2>
           <div className="space-y-1">
             {data.certifications.map((cert, idx) => (
-              <p key={idx} className="text-sm text-gray-700">✓ {typeof cert === 'string' ? cert : cert.name}</p>
+              <p key={idx} className="text-sm text-gray-700">{typeof cert === 'string' ? cert : cert.name}</p>
             ))}
           </div>
         </div>

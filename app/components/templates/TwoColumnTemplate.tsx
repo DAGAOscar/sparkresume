@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { CVData } from '@/app/utils/templates';
-import { Mail, Phone, MapPin } from 'lucide-react';
 import { ContactLinks } from './ContactLinks';
 import { SectionRenderer } from './SectionRenderer';
 
@@ -22,21 +21,12 @@ export const TwoColumnTemplate: React.FC<TwoColumnTemplateProps> = ({ data }) =>
         <div className="mb-8">
           <h3 className="text-xs font-bold uppercase tracking-widest text-blue-200 mb-4">Contact</h3>
           <div className="space-y-3">
-            <div className="flex items-start gap-3">
-              <Mail size={14} className="flex-shrink-0 mt-0.5" />
-              <div className="flex flex-wrap gap-2 items-center">
-                <span className="text-xs">{data.email}</span>
-                <ContactLinks links={data.links} inline className="text-xs" />
-              </div>
+            <div className="text-xs">{data.email}</div>
+            <div className="flex flex-wrap gap-2 items-center">
+              <ContactLinks links={data.links} inline className="text-xs" />
             </div>
-            <div className="flex items-start gap-3">
-              <Phone size={14} className="flex-shrink-0 mt-0.5" />
-              <span className="text-xs">{data.phone}</span>
-            </div>
-            <div className="flex items-start gap-3">
-              <MapPin size={14} className="flex-shrink-0 mt-0.5" />
-              <span className="text-xs">{data.location}</span>
-            </div>
+            <div className="text-xs">{data.phone}</div>
+            <div className="text-xs">{data.location}</div>
           </div>
         </div>
 

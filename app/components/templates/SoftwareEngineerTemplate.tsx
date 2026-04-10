@@ -4,7 +4,6 @@ import React from 'react';
 import { CVData } from '@/app/utils/templates';
 import { ContactLinks } from './ContactLinks';
 import { SectionRenderer } from './SectionRenderer';
-import { Mail, Phone, MapPin } from 'lucide-react';
 
 interface SoftwareEngineerTemplateProps {
   data: CVData;
@@ -17,19 +16,12 @@ export const SoftwareEngineerTemplate: React.FC<SoftwareEngineerTemplateProps> =
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-blue-700 mb-2" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.5px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-4 items-center text-sm text-gray-700">
-          <div className="flex items-center gap-2">
-            <Mail size={16} className="text-blue-600" />
-            <span>{data.email}</span>
-            <ContactLinks links={data.links} inline className="text-sm" />
-          </div>
-          <div className="flex items-center gap-2">
-            <Phone size={16} className="text-blue-600" />
-            <span>{data.phone}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin size={16} className="text-blue-600" />
-            <span>{data.location}</span>
-          </div>
+          <span>{data.email}</span>
+          <span>•</span>
+          <span>{data.phone}</span>
+          <span>•</span>
+          <span>{data.location}</span>
+          <ContactLinks links={data.links} inline className="text-sm" />
         </div>
       </div>
 

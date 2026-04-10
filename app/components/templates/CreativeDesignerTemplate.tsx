@@ -4,7 +4,6 @@ import React from 'react';
 import { CVData } from '@/app/utils/templates';
 import { ContactLinks } from './ContactLinks';
 import { SectionRenderer } from './SectionRenderer';
-import { Mail, Phone, MapPin } from 'lucide-react';
 
 interface CreativeDesignerTemplateProps {
   data: CVData;
@@ -15,22 +14,14 @@ export const CreativeDesignerTemplate: React.FC<CreativeDesignerTemplateProps> =
     <div className="w-full bg-gradient-to-br from-purple-50 via-white to-pink-50 text-gray-900 p-8" style={{ fontFamily: 'var(--font-plus-jakarta), sans-serif', fontSize: '15px', lineHeight: '1.6', letterSpacing: '-0.3px' }}>
       {/* Decorative Header */}
       <div className="text-center mb-8 pb-8 border-b-2 border-purple-200">
-        <div className="text-3xl mb-3">✦</div>
         <h1 className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-3" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.6px' }}>{data.name}</h1>
         <div className="flex flex-wrap justify-center gap-5 items-center text-sm text-gray-600">
-          <div className="flex items-center gap-2">
-            <Mail size={16} className="text-purple-600" />
-            <span>{data.email}</span>
-            <ContactLinks links={data.links} inline className="text-sm" />
-          </div>
-          <div className="flex items-center gap-2">
-            <Phone size={16} className="text-purple-600" />
-            <span>{data.phone}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin size={16} className="text-purple-600" />
-            <span>{data.location}</span>
-          </div>
+          <span>{data.email}</span>
+          <span>•</span>
+          <span>{data.phone}</span>
+          <span>•</span>
+          <span>{data.location}</span>
+          <ContactLinks links={data.links} inline className="text-sm" />
         </div>
       </div>
 

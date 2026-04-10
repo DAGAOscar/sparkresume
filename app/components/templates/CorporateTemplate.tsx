@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { CVData } from '@/app/utils/templates';
-import { Mail, Phone, MapPin } from 'lucide-react';
 import { ContactLinks } from './ContactLinks';
 import { SectionRenderer } from './SectionRenderer';
 
@@ -17,19 +16,12 @@ export const CorporateTemplate: React.FC<CorporateTemplateProps> = ({ data }) =>
       <div className="bg-gray-900 text-white p-8 mb-8 -mx-8 -mt-8" style={{ marginBottom: '32px' }}>
         <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-playfair)', fontWeight: 700, letterSpacing: '-0.5px' }}>{data.name}</h1>
         <div className="flex flex-wrap gap-3 items-center text-xs">
-          <div className="flex items-center gap-1">
-            <Mail size={14} />
-            <span>{data.email}</span>
-            <ContactLinks links={data.links} inline className="text-xs" />
-          </div>
-          <div className="flex items-center gap-1">
-            <Phone size={14} />
-            <span>{data.phone}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <MapPin size={14} />
-            <span>{data.location}</span>
-          </div>
+          <span>{data.email}</span>
+          <span>•</span>
+          <span>{data.phone}</span>
+          <span>•</span>
+          <span>{data.location}</span>
+          <ContactLinks links={data.links} inline className="text-xs" />
         </div>
       </div>
 
