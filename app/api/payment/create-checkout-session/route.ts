@@ -4,7 +4,45 @@ import { createClient } from '@supabase/supabase-js'
 
 export async function POST(request: NextRequest) {
   try {
+    // Validate required environment variables
+    if (!process.env.STRIPE_SECRET_KEY) {
+      console.error('STRIPE_SECRET_KEY not found in environment')
+      return NextResponse.json(
+        { 
+          error: 'Payment system is not configured', 
+          details: 'STRIPE_SECRET_KEY is missing from environment variables' 
+        },
+        { status: 500 }
+      )
+    }
+
+    if (!process.env.NEXT_PUBLIC_APP_URL) {
+      console.error('NEXT_PUBLIC_APP_URL not found in environment')
+      return NextResponse.json(
+        { 
+          error: 'Payment system is not configured', 
+          details: 'NEXT_PUBLIC_APP_URL is missing from environment variables' 
+        },
+        { status: 500 }
+      )
+    }
+
     const { priceId, plan } = await request.json()
+
+    // Validate input
+    if (!priceId) {
+      return NextResponse.json(
+        { error: 'Missing priceId parameter' },
+        { status: 400 }
+      )
+    }
+
+    if (!plan || !['monthly', 'yearly'].includes(plan)) {
+      return NextResponse.json(
+        { error: 'Invalid plan parameter' },
+        { status: 400 }
+      )
+    }
 
     // Get auth token from request header
     const authHeader = request.headers.get('authorization')
@@ -47,7 +85,7 @@ export async function POST(request: NextRequest) {
 
     if (!userEmail) {
       return NextResponse.json(
-        { error: 'No email found' },
+        { error: 'No email found for user' },
         { status: 400 }
       )
     }
@@ -63,8 +101,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ sessionId: checkoutSession.id })
   } catch (error) {
     console.error('Error creating checkout session:', error)
+    const errorMessage = error instanceof Error ? error.message : String(error)
     return NextResponse.json(
-      { error: 'Failed to create checkout session', details: String(error) },
+      { 
+        error: 'Failed to create checkout session', 
+        details: errorMessage 
+      },
       { status: 500 }
     )
   }

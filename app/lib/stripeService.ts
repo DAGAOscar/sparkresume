@@ -4,12 +4,18 @@ let stripe: Stripe | null = null
 
 async function getStripe(): Promise<Stripe> {
   if (!stripe) {
-    if (!process.env.STRIPE_SECRET_KEY) {
-      throw new Error('Missing STRIPE_SECRET_KEY environment variable')
+    const secretKey = process.env.STRIPE_SECRET_KEY
+    if (!secretKey) {
+      console.error('STRIPE_SECRET_KEY is not defined in environment variables')
+      console.error('Available env vars:', Object.keys(process.env).filter(k => k.includes('STRIPE')))
+      throw new Error(
+        `Missing STRIPE_SECRET_KEY environment variable. ` +
+        `Make sure it's defined in .env.local or your production environment.`
+      )
     }
     // Dynamic import to avoid module-level evaluation issues
     const { default: Stripe } = await import('stripe')
-    stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    stripe = new Stripe(secretKey, {
       typescript: true,
     })
   }
