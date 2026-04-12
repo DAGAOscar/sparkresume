@@ -65,9 +65,6 @@ export default function Header() {
         </Link>
         {isLoggedIn ? (
           <>
-            <Link href="/builder" className="btn btn-primary btn-xs md:btn-sm">
-              Build CV
-            </Link>
             <Link href="/dashboard" className="btn btn-ghost btn-xs md:btn-sm">
               Dashboard
             </Link>
@@ -119,9 +116,6 @@ export default function Header() {
             </Link>
             {isLoggedIn ? (
               <>
-                <Link href="/builder" className="btn btn-primary btn-sm w-full">
-                  Build CV
-                </Link>
                 <Link href="/dashboard" className="btn btn-ghost btn-sm w-full">
                   Dashboard
                 </Link>
