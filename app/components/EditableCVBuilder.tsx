@@ -169,6 +169,20 @@ export default function EditableCVBuilder({
     });
   };
 
+  const handlePrintCV = () => {
+    // Configure print style and trigger print dialog
+    const printContent = document.getElementById('template-content');
+    if (!printContent) {
+      alert('Template not found');
+      return;
+    }
+    
+    // Trigger the browser print dialog
+    // The @media print styles in globals.css will handle hiding UI elements
+    // and proper page break configuration
+    window.print();
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6 max-w-7xl mx-auto">
@@ -554,7 +568,7 @@ export default function EditableCVBuilder({
               <h3 className="text-lg font-bold">{getTemplateInfo(selectedTemplate)?.name}</h3>
               <div className="flex gap-2">
                 <button
-                  onClick={() => window.print()}
+                  onClick={handlePrintCV}
                   className="p-2 bg-gray-700 rounded hover:bg-gray-600 transition"
                   title="Print"
                 >

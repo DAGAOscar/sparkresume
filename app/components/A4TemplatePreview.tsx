@@ -48,6 +48,12 @@ export default function A4TemplatePreview({
     [selectedTemplate]
   );
 
+  const handlePrintCV = () => {
+    // Trigger browser print with proper CSS configuration
+    // @media print styles in globals.css handle page breaks and section protection
+    window.print();
+  };
+
   const handleDownloadPDF = async () => {
     if (!isLoggedIn) {
       setShowLoginPrompt(true);
@@ -101,7 +107,7 @@ export default function A4TemplatePreview({
       </div>
 
       {/* A4 Page Preview */}
-      <div className="flex-1 overflow-auto p-8 flex items-start justify-center">
+      <div className="flex-1 overflow-auto p-8 flex items-start justify-center bg-gray-100">
         <div
           id="template-content"
           className="bg-white shadow-2xl overflow-hidden print:shadow-none"
@@ -109,6 +115,7 @@ export default function A4TemplatePreview({
             width: '210mm',
             minHeight: '297mm',
             boxSizing: 'border-box',
+            pageBreakAfter: 'always',
           }}
         >
           {TemplateComponent && <TemplateComponent data={cvData} />}
@@ -118,7 +125,7 @@ export default function A4TemplatePreview({
       {/* Footer with actions */}
       <div className="bg-white border-t p-4 flex gap-2 justify-end">
         <button
-          onClick={() => window.print()}
+          onClick={handlePrintCV}
           className="btn btn-outline btn-sm gap-2"
         >
           <Printer size={16} />

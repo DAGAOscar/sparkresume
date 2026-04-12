@@ -77,3 +77,81 @@
 .bw-editor button[class*="hover:bg-"]:hover {
     background-color: #eeeeee !important;
 }
+
+/* ==================== PRINT STYLES ==================== */
+/* Optimize printing for PDFs and physical print */
+
+@media print {
+    /* Hide UI elements */
+    body nav,
+    body header,
+    body footer,
+    .no-print,
+    button,
+    [role="button"] {
+        display: none !important;
+    }
+
+    /* Template content printing */
+    #template-content {
+        width: 210mm !important;
+        height: auto !important;
+        box-shadow: none !important;
+        page-break-after: avoid !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: white !important;
+    }
+
+    /* Page sizing for A4 */
+    @page {
+        size: A4;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Prevent page breaks in the middle of sections */
+    section,
+    .section,
+    [role="region"] {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Allow page breaks between major sections */
+    .page-break-after {
+        page-break-after: always;
+        break-after: page;
+    }
+
+    /* Prevent orphaned/widowed content */
+    h1, h2, h3, h4, h5, h6 {
+        page-break-after: avoid;
+        break-after: avoid;
+    }
+
+    /* Keep content together */
+    ul, ol, p {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Ensure text is readable */
+    * {
+        background: transparent !important;
+        color: black !important;
+        text-shadow: none !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    /* Maintain link visibility */
+    a {
+        text-decoration: underline;
+    }
+
+    /* Remove transforms that affect printing */
+    body {
+        transform: none !important;
+    }
+}
