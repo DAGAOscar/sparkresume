@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { CVData, Language } from '@/app/utils/templates';
 import { getTemplateInfo, REACT_TEMPLATES } from '@/app/components/templates';
-import { Download, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Download, Plus, Trash2, ChevronDown, ChevronUp, ArrowUp, ArrowDown } from 'lucide-react';
 import A4TemplatePreview from '@/app/components/A4TemplatePreview';
 import AdditionalSectionsManager from '@/app/components/AdditionalSectionsManager';
 import html2canvas from 'html2canvas-pro';
@@ -31,6 +31,14 @@ export default function EditableCVBuilder({
     languages: false,
     projects: false,
   });
+  const [sectionOrder, setSectionOrder] = useState<string[]>([
+    'personal',
+    'experience',
+    'education',
+    'skills',
+    'languages',
+    'projects',
+  ]);
 
   const handleDataChange = (newData: CVData) => {
     setCvData(newData);
@@ -42,6 +50,51 @@ export default function EditableCVBuilder({
       ...prev,
       [section]: !prev[section],
     }));
+  };
+
+  const moveSection = (section: string, direction: 'up' | 'down') => {
+    const currentIndex = sectionOrder.indexOf(section);
+    if (currentIndex === -1) return;
+
+    const newOrder = [...sectionOrder];
+    if (direction === 'up' && currentIndex > 0) {
+      [newOrder[currentIndex], newOrder[currentIndex - 1]] = [newOrder[currentIndex - 1], newOrder[currentIndex]];
+      setSectionOrder(newOrder);
+    } else if (direction === 'down' && currentIndex < sectionOrder.length - 1) {
+      [newOrder[currentIndex], newOrder[currentIndex + 1]] = [newOrder[currentIndex + 1], newOrder[currentIndex]];
+      setSectionOrder(newOrder);
+    }
+  };
+
+  const renderSectionHeader = (section: string, title: string, icon: string) => {
+    const currentIndex = sectionOrder.indexOf(section);
+    const canMoveUp = currentIndex > 0;
+    const canMoveDown = currentIndex < sectionOrder.length - 1;
+
+    return (
+      <div className="w-full flex justify-between items-center">
+        <span>{icon} {title}</span>
+        <div className="flex gap-1">
+          <button
+            onClick={() => moveSection(section, 'up')}
+            disabled={!canMoveUp}
+            className={`p-1 rounded transition ${canMoveUp ? 'hover:bg-gray-200 cursor-pointer' : 'text-gray-300 cursor-not-allowed'}`}
+            title="Move section up"
+          >
+            <ArrowUp size={16} />
+          </button>
+          <button
+            onClick={() => moveSection(section, 'down')}
+            disabled={!canMoveDown}
+            className={`p-1 rounded transition ${canMoveDown ? 'hover:bg-gray-200 cursor-pointer' : 'text-gray-300 cursor-not-allowed'}`}
+            title="Move section down"
+          >
+            <ArrowDown size={16} />
+          </button>
+          {expandedSections[section] ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+        </div>
+      </div>
+    );
   };
 
   const updatePersonalDetails = (name: string, email: string, phone: string, location: string, summary: string) => {
@@ -201,8 +254,7 @@ export default function EditableCVBuilder({
               onClick={() => toggleSection('personal')}
               className="w-full p-4 flex justify-between items-center bg-blue-50 hover:bg-blue-100 transition font-bold"
             >
-              <span>👤 Personal Details</span>
-              {expandedSections.personal ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              {renderSectionHeader('personal', 'Personal Details', '👤')}
             </button>
             {expandedSections.personal && (
               <div className="p-4 space-y-3 bg-white">
@@ -293,8 +345,7 @@ export default function EditableCVBuilder({
               onClick={() => toggleSection('experience')}
               className="w-full p-4 flex justify-between items-center bg-green-50 hover:bg-green-100 transition font-bold"
             >
-              <span>💼 Experience ({cvData.experience.length})</span>
-              {expandedSections.experience ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              {renderSectionHeader('experience', `Experience (${cvData.experience.length})`, '💼')}
             </button>
             {expandedSections.experience && (
               <div className="p-4 space-y-3 bg-white max-h-96 overflow-y-auto">
@@ -381,8 +432,7 @@ export default function EditableCVBuilder({
               onClick={() => toggleSection('education')}
               className="w-full p-4 flex justify-between items-center bg-purple-50 hover:bg-purple-100 transition font-bold"
             >
-              <span>🎓 Education ({cvData.education.length})</span>
-              {expandedSections.education ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              {renderSectionHeader('education', `Education (${cvData.education.length})`, '🎓')}
             </button>
             {expandedSections.education && (
               <div className="p-4 space-y-3 bg-white max-h-96 overflow-y-auto">
@@ -458,8 +508,7 @@ export default function EditableCVBuilder({
               onClick={() => toggleSection('skills')}
               className="w-full p-4 flex justify-between items-center bg-orange-50 hover:bg-orange-100 transition font-bold"
             >
-              <span>⭐ Skills ({cvData.skills.length})</span>
-              {expandedSections.skills ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              {renderSectionHeader('skills', `Skills (${cvData.skills.length})`, '⭐')}
             </button>
             {expandedSections.skills && (
               <div className="p-4 space-y-2 bg-white max-h-72 overflow-y-auto">
@@ -499,8 +548,7 @@ export default function EditableCVBuilder({
               onClick={() => toggleSection('languages')}
               className="w-full p-4 flex justify-between items-center bg-indigo-50 hover:bg-indigo-100 transition font-bold"
             >
-              <span>🌐 Languages ({(cvData.languages || []).length})</span>
-              {expandedSections.languages ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+              {renderSectionHeader('languages', `Languages (${(cvData.languages || []).length})`, '🌐')}
             </button>
             {expandedSections.languages && (
               <div className="p-4 space-y-3 bg-white max-h-72 overflow-y-auto">
