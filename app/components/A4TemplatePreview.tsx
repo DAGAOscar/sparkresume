@@ -6,6 +6,8 @@ import { CVData } from '@/app/utils/templates';
 import { getTemplateById, getTemplateInfo } from '@/app/components/templates';
 import { Printer, Download, LogIn } from 'lucide-react';
 import { supabase } from '@/app/lib/supabase';
+import html2canvas from 'html2canvas-pro';
+import jsPDF from 'jspdf';
 
 interface A4TemplatePreviewProps {
   cvData: CVData;
@@ -46,12 +48,39 @@ export default function A4TemplatePreview({
     [selectedTemplate]
   );
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
     if (!isLoggedIn) {
       setShowLoginPrompt(true);
       return;
     }
-    window.print();
+    
+    try {
+      const element = document.getElementById('template-content');
+      if (element) {
+        const canvas = await html2canvas(element, { scale: 2, useCORS: true, allowTaint: true });
+        const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = pdfWidth;
+        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pdfHeight;
+        }
+        const templateName = templateInfo?.name.replace(/\s+/g, '-').toLowerCase() || 'resume';
+        pdf.save(`resume-${templateName}.pdf`);
+      }
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      alert('Error generating PDF. Please try again.');
+    }
   };
 
   return (
