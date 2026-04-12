@@ -30,7 +30,7 @@ export default function PrivacyPage() {
             <section>
               <h2 className="text-3xl font-bold mb-4">1. Introduction</h2>
               <p className="text-lg leading-relaxed">
-                SparkResume ("we", "us", "our") operates the sparkresume.work website (the "Service"). 
+                SparkResume (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) operates the sparkresume.work website (the &quot;Service&quot;). 
                 This page informs you of our policies regarding the collection, use, and disclosure of personal data 
                 when you use our Service and the choices you have associated with that data.
               </p>
@@ -160,7 +160,7 @@ export default function PrivacyPage() {
               <h2 className="text-3xl font-bold mb-4">8. Changes to This Privacy Policy</h2>
               <p className="text-lg leading-relaxed">
                 We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new 
-                Privacy Policy on this page and updating the "Last updated" date at the top of this page.
+                Privacy Policy on this page and updating the &quot;Last updated&quot; date at the top of this page.
               </p>
             </section>
 

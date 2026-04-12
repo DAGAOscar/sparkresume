@@ -29,7 +29,7 @@ export default function AboutPage() {
             <section className="mb-12">
               <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
               <p className="text-lg leading-relaxed mb-4">
-                At SparkResume, we believe that everyone deserves a professional CV that can compete in today's job market. 
+                At SparkResume, we believe that everyone deserves a professional CV that can compete in today&apos;s job market. 
                 Our mission is to make CV creation simple, accessible, and powerful for everyone.
               </p>
             </section>
@@ -76,7 +76,7 @@ export default function AboutPage() {
               <ul className="space-y-3 text-lg">
                 <li className="flex gap-3">
                   <span className="text-primary font-bold">•</span>
-                  <span>Clean, modern interface that's easy to use</span>
+                  <span>Clean, modern interface that&apos;s easy to use</span>
                 </li>
                 <li className="flex gap-3">
                   <span className="text-primary font-bold">•</span>
