@@ -43,6 +43,8 @@
     background-color: white !important;
     color: black !important;
     border-color: #999999 !important;
+    font-size: 11px;
+    font-size: 0.6875rem;
 }
 
 .bw-editor input::placeholder,
@@ -110,12 +112,24 @@
         padding: 0;
     }
 
-    /* Prevent page breaks in the middle of sections */
+    /* Prevent page breaks in the middle of sections and force new section to new page */
     section,
     .section,
-    [role="region"] {
+    [role="region"],
+    .cv-section {
         page-break-inside: avoid;
         break-inside: avoid;
+        orphans: 3;
+        widows: 3;
+    }
+    
+    /* Force sections to start on new page if space is limited */
+    section + section,
+    .section + .section,
+    section.cv-section,
+    .cv-section {
+        page-break-before: avoid;
+        break-before: avoid;
     }
 
     /* Allow page breaks between major sections */

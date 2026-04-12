@@ -4,7 +4,7 @@ import React, { useMemo, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { CVData } from '@/app/utils/templates';
 import { getTemplateById, getTemplateInfo } from '@/app/components/templates';
-import { Printer, Download, LogIn } from 'lucide-react';
+import { Download, LogIn } from 'lucide-react';
 import { supabase } from '@/app/lib/supabase';
 import html2canvas from 'html2canvas-pro';
 import jsPDF from 'jspdf';
@@ -47,12 +47,6 @@ export default function A4TemplatePreview({
     () => getTemplateInfo(selectedTemplate),
     [selectedTemplate]
   );
-
-  const handlePrintCV = () => {
-    // Trigger browser print with proper CSS configuration
-    // @media print styles in globals.css handle page breaks and section protection
-    window.print();
-  };
 
   const handleDownloadPDF = async () => {
     if (!isLoggedIn) {
@@ -124,13 +118,6 @@ export default function A4TemplatePreview({
 
       {/* Footer with actions */}
       <div className="bg-white border-t p-4 flex gap-2 justify-end">
-        <button
-          onClick={handlePrintCV}
-          className="btn btn-outline btn-sm gap-2"
-        >
-          <Printer size={16} />
-          Print
-        </button>
         <button
           onClick={handleDownloadPDF}
           className={"btn btn-sm gap-2 " + (isLoggedIn ? "btn-primary" : "btn-disabled")}

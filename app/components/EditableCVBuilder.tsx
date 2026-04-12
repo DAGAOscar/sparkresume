@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { CVData, Language } from '@/app/utils/templates';
 import { getTemplateInfo, REACT_TEMPLATES } from '@/app/components/templates';
-import { Download, Printer, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { Download, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import A4TemplatePreview from '@/app/components/A4TemplatePreview';
 import AdditionalSectionsManager from '@/app/components/AdditionalSectionsManager';
 import html2canvas from 'html2canvas-pro';
@@ -167,20 +167,6 @@ export default function EditableCVBuilder({
       ...cvData,
       links: (cvData.links || []).filter((_, i) => i !== index),
     });
-  };
-
-  const handlePrintCV = () => {
-    // Configure print style and trigger print dialog
-    const printContent = document.getElementById('template-content');
-    if (!printContent) {
-      alert('Template not found');
-      return;
-    }
-    
-    // Trigger the browser print dialog
-    // The @media print styles in globals.css will handle hiding UI elements
-    // and proper page break configuration
-    window.print();
   };
 
   return (
@@ -567,13 +553,6 @@ export default function EditableCVBuilder({
             <div className="bg-gray-900 text-white p-4 flex justify-between items-center">
               <h3 className="text-lg font-bold">{getTemplateInfo(selectedTemplate)?.name}</h3>
               <div className="flex gap-2">
-                <button
-                  onClick={handlePrintCV}
-                  className="p-2 bg-gray-700 rounded hover:bg-gray-600 transition"
-                  title="Print"
-                >
-                  <Printer size={18} />
-                </button>
                 <button
                   onClick={async () => {
                     try {
