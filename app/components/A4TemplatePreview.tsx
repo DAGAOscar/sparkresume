@@ -53,36 +53,57 @@ export default function A4TemplatePreview({
     }
     
     try {
-      // Dynamically import html2pdf to avoid SSR issues
-      const { default: html2pdf } = await import('html2pdf.js');
-      
       const element = document.getElementById('template-content');
-      if (element) {
-        const templateName = templateInfo?.name.replace(/\s+/g, '-').toLowerCase() || 'resume';
-        const opt = {
-          margin: 0,
-          filename: `resume-${templateName}.pdf`,
-          image: { type: 'jpeg' as const, quality: 0.98 },
-          html2canvas: {
-            scale: 2,
-            useCORS: true,
-            allowTaint: true,
-            logging: false,
-          },
-          jsPDF: {
-            orientation: 'portrait' as const,
-            unit: 'mm' as const,
-            format: 'a4' as const,
-            compress: true,
-          },
-        };
-        
-        // html2pdf preserves clickable links
-        await html2pdf().set(opt).from(element).save();
+      if (!element) {
+        alert('Template content not found');
+        return;
       }
+
+      // Dynamically import both libraries
+      const html2canvas = (await import('html2canvas-pro')).default;
+      const jsPDF = (await import('jspdf')).jsPDF;
+      
+      // Clone element to avoid modifying original
+      const clonedElement = element.cloneNode(true) as HTMLElement;
+      
+      // Generate canvas with high quality
+      const canvas = await html2canvas(clonedElement, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+        imageTimeout: 5000,
+      });
+
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const imgWidth = pdfWidth;
+      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      let heightLeft = imgHeight;
+      let position = 0;
+      
+      // Add first page
+      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pdfHeight;
+      
+      // Add additional pages if needed
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+      }
+      
+      const templateName = templateInfo?.name.replace(/\s+/g, '-').toLowerCase() || 'resume';
+      pdf.save(`resume-${templateName}.pdf`);
     } catch (error) {
       console.error('Error generating PDF:', error);
-      alert('Error generating PDF. Please try again.');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      alert(`Error generating PDF: ${errorMessage}. Please try again.`);
     }
   };
 
