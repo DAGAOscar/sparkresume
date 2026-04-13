@@ -53,57 +53,79 @@ export default function A4TemplatePreview({
     }
     
     try {
+      console.log('[PDF] Starting PDF generation...');
       const element = document.getElementById('template-content');
       if (!element) {
         alert('Template content not found');
         return;
       }
 
+      console.log('[PDF] Element found, importing libraries...');
       // Dynamically import both libraries
       const html2canvas = (await import('html2canvas-pro')).default;
       const jsPDF = (await import('jspdf')).jsPDF;
+      console.log('[PDF] Libraries imported successfully');
       
       // Clone element to avoid modifying original
+      console.log('[PDF] Cloning element...');
       const clonedElement = element.cloneNode(true) as HTMLElement;
       
       // Generate canvas with high quality
-      const canvas = await html2canvas(clonedElement, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        logging: false,
-        backgroundColor: '#ffffff',
-        imageTimeout: 5000,
-      });
+      console.log('[PDF] Converting to canvas...');
+      let canvas;
+      try {
+        canvas = await html2canvas(clonedElement, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          logging: true,
+          backgroundColor: '#ffffff',
+          imageTimeout: 5000,
+        });
+        console.log('[PDF] Canvas created successfully', canvas.width, 'x', canvas.height);
+      } catch (canvasError) {
+        console.error('[PDF] Failed to convert to canvas:', canvasError);
+        throw new Error(`Canvas conversion failed: ${canvasError instanceof Error ? canvasError.message : String(canvasError)}`);
+      }
 
-      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      console.log('[PDF] Creating PDF document...');
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' } as const);
+      console.log('[PDF] Converting canvas to image...');
       const imgData = canvas.toDataURL('image/jpeg', 0.95);
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
       const imgWidth = pdfWidth;
       const imgHeight = (canvas.height * pdfWidth) / canvas.width;
       
+      console.log('[PDF] Adding images to PDF (width:', imgWidth, ', height:', imgHeight, ')');
       let heightLeft = imgHeight;
       let position = 0;
       
       // Add first page
-      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      pdf.addImage(imgData, 'JPEG' as const, 0, position, imgWidth, imgHeight);
       heightLeft -= pdfHeight;
       
       // Add additional pages if needed
       while (heightLeft > 0) {
         position = heightLeft - imgHeight;
         pdf.addPage();
-        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+        pdf.addImage(imgData, 'JPEG' as const, 0, position, imgWidth, imgHeight);
         heightLeft -= pdfHeight;
       }
       
+      console.log('[PDF] Saving PDF file...');
       const templateName = templateInfo?.name.replace(/\s+/g, '-').toLowerCase() || 'resume';
       pdf.save(`resume-${templateName}.pdf`);
+      console.log('[PDF] PDF downloaded successfully');
     } catch (error) {
       console.error('Error generating PDF:', error);
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      alert(`Error generating PDF: ${errorMessage}. Please try again.`);
+      console.error('Error type:', typeof error);
+      console.error('Error toString:', String(error));
+      if (error instanceof Error) {
+        console.error('Error stack:', error.stack);
+      }
+      const errorMessage = error instanceof Error ? error.message : String(error) || 'Unknown error';
+      alert(`Error generating PDF: ${errorMessage}. Please check browser console for details.`);
     }
   };
 
