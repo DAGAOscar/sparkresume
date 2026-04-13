@@ -6,8 +6,6 @@ import { CVData } from '@/app/utils/templates';
 import { getTemplateById, getTemplateInfo } from '@/app/components/templates';
 import { Download, LogIn } from 'lucide-react';
 import { supabase } from '@/app/lib/supabase';
-import html2canvas from 'html2canvas-pro';
-import jsPDF from 'jspdf';
 
 interface A4TemplatePreviewProps {
   cvData: CVData;
@@ -55,27 +53,32 @@ export default function A4TemplatePreview({
     }
     
     try {
+      // Dynamically import html2pdf to avoid SSR issues
+      const html2pdf = (await import('html2pdf.js')).default;
+      
       const element = document.getElementById('template-content');
       if (element) {
-        const canvas = await html2canvas(element, { scale: 2, useCORS: true, allowTaint: true });
-        const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-        const pdfWidth = pdf.internal.pageSize.getWidth();
-        const pdfHeight = pdf.internal.pageSize.getHeight();
-        const imgWidth = pdfWidth;
-        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
-        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pdfHeight;
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight;
-          pdf.addPage();
-          pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pdfHeight;
-        }
         const templateName = templateInfo?.name.replace(/\s+/g, '-').toLowerCase() || 'resume';
-        pdf.save(`resume-${templateName}.pdf`);
+        const opt = {
+          margin: 0,
+          filename: `resume-${templateName}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            logging: false,
+          },
+          jsPDF: {
+            orientation: 'portrait',
+            unit: 'mm',
+            format: 'a4',
+            compress: true,
+          },
+        };
+        
+        // html2pdf preserves clickable links
+        await (html2pdf as any)().set(opt).from(element).save();
       }
     } catch (error) {
       console.error('Error generating PDF:', error);

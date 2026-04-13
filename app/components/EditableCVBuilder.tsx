@@ -7,8 +7,6 @@ import { getTemplateInfo, REACT_TEMPLATES } from '@/app/components/templates';
 import { Download, Plus, Trash2, ChevronDown, ChevronUp, ArrowUp, ArrowDown } from 'lucide-react';
 import A4TemplatePreview from '@/app/components/A4TemplatePreview';
 import AdditionalSectionsManager from '@/app/components/AdditionalSectionsManager';
-import html2canvas from 'html2canvas-pro';
-import jsPDF from 'jspdf';
 
 interface EditableCVBuilderProps {
   initialData: CVData;
@@ -596,26 +594,32 @@ export default function EditableCVBuilder({
                 <button
                   onClick={async () => {
                     try {
+                      // Dynamically import html2pdf to avoid SSR issues
+                      const html2pdf = (await import('html2pdf.js')).default;
+                      
                       const element = document.getElementById('template-content');
                       if (element) {
-                        const canvas = await html2canvas(element, { scale: 2, useCORS: true, allowTaint: true });
-                        const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-                        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-                        const pdfWidth = pdf.internal.pageSize.getWidth();
-                        const pdfHeight = pdf.internal.pageSize.getHeight();
-                        const imgWidth = pdfWidth;
-                        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
-                        let heightLeft = imgHeight;
-                        let position = 0;
-                        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-                        heightLeft -= pdfHeight;
-                        while (heightLeft >= 0) {
-                          position = heightLeft - imgHeight;
-                          pdf.addPage();
-                          pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-                          heightLeft -= pdfHeight;
-                        }
-                        pdf.save(`cv-${getTemplateInfo(selectedTemplate)?.name.replace(/\s+/g, '-')}.pdf`);
+                        const templateName = getTemplateInfo(selectedTemplate)?.name.replace(/\s+/g, '-').toLowerCase() || 'resume';
+                        const opt = {
+                          margin: 0,
+                          filename: `resume-${templateName}.pdf`,
+                          image: { type: 'jpeg', quality: 0.98 },
+                          html2canvas: {
+                            scale: 2,
+                            useCORS: true,
+                            allowTaint: true,
+                            logging: false,
+                          },
+                          jsPDF: {
+                            orientation: 'portrait',
+                            unit: 'mm',
+                            format: 'a4',
+                            compress: true,
+                          },
+                        };
+                        
+                        // html2pdf preserves clickable links
+                        await (html2pdf as any)().set(opt).from(element).save();
                       }
                     } catch (error) {
                       console.error('Error generating PDF:', error);
