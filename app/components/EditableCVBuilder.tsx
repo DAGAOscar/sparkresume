@@ -97,6 +97,338 @@ export default function EditableCVBuilder({
     );
   };
 
+  const renderSectionContent = (sectionType: string) => {
+    const getSectionConfig = (type: string) => {
+      const configs: { [key: string]: { title: string; icon: string; bgColor: string; count?: number } } = {
+        personal: { title: 'Personal Details', icon: '👤', bgColor: 'bg-blue-50' },
+        experience: { title: `Experience`, icon: '💼', bgColor: 'bg-green-50', count: cvData.experience.length },
+        education: { title: `Education`, icon: '🎓', bgColor: 'bg-purple-50', count: cvData.education.length },
+        skills: { title: `Skills`, icon: '⭐', bgColor: 'bg-orange-50', count: cvData.skills.length },
+        languages: { title: `Languages`, icon: '🌐', bgColor: 'bg-indigo-50', count: (cvData.languages || []).length },
+      };
+      return configs[type];
+    };
+
+    const config = getSectionConfig(sectionType);
+    if (!config) return null;
+
+    const title = config.count !== undefined ? `${config.title} (${config.count})` : config.title;
+    const headerClass = `${config.bgColor} hover:${config.bgColor}/80`;
+
+    return (
+      <div key={sectionType} className="border rounded-lg">
+        <button
+          onClick={() => toggleSection(sectionType)}
+          className={`w-full p-4 flex justify-between items-center ${headerClass} transition font-bold`}
+        >
+          {renderSectionHeader(sectionType, title, config.icon)}
+        </button>
+        {expandedSections[sectionType] && (
+          <div className="p-4 space-y-3 bg-white">
+            {sectionType === 'personal' && (
+              <>
+                <input
+                  type="text"
+                  placeholder="Full Name"
+                  value={cvData.name}
+                  onChange={(e) => updatePersonalDetails(e.target.value, cvData.email, cvData.phone, cvData.location, cvData.summary || '')}
+                  className="w-full px-3 py-2 border rounded text-sm"
+                />
+                <input
+                  type="email"
+                  placeholder="Email"
+                  value={cvData.email}
+                  onChange={(e) => updatePersonalDetails(cvData.name, e.target.value, cvData.phone, cvData.location, cvData.summary || '')}
+                  className="w-full px-3 py-2 border rounded text-sm"
+                />
+                <div className="space-y-2">
+                  {(cvData.links || []).map((link, idx) => (
+                    <div key={idx} className="flex gap-2 items-center bg-gray-50 p-2 rounded">
+                      <input
+                        type="text"
+                        placeholder="Icon"
+                        value={link.icon || ''}
+                        onChange={(e) => updateLink(idx, 'icon', e.target.value)}
+                        maxLength={2}
+                        className="w-8 px-1 py-1 border rounded text-center text-sm"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Label"
+                        value={link.label}
+                        onChange={(e) => updateLink(idx, 'label', e.target.value)}
+                        className="flex-1 px-2 py-1 border rounded text-sm"
+                      />
+                      <input
+                        type="url"
+                        placeholder="URL"
+                        value={link.url}
+                        onChange={(e) => updateLink(idx, 'url', e.target.value)}
+                        className="flex-1 px-2 py-1 border rounded text-sm"
+                      />
+                      <button
+                        onClick={() => removeLink(idx)}
+                        className="px-1 py-1 text-red-600 hover:text-red-700"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    onClick={addLink}
+                    className="w-full px-3 py-2 text-blue-600 hover:text-blue-700 text-sm flex items-center justify-center gap-1 border border-dashed border-blue-300 rounded hover:bg-blue-50"
+                  >
+                    <Plus size={16} /> Add Link
+                  </button>
+                </div>
+                <input
+                  type="tel"
+                  placeholder="Phone"
+                  value={cvData.phone}
+                  onChange={(e) => updatePersonalDetails(cvData.name, cvData.email, e.target.value, cvData.location, cvData.summary || '')}
+                  className="w-full px-3 py-2 border rounded text-sm"
+                />
+                <input
+                  type="text"
+                  placeholder="Location"
+                  value={cvData.location}
+                  onChange={(e) => updatePersonalDetails(cvData.name, cvData.email, cvData.phone, e.target.value, cvData.summary || '')}
+                  className="w-full px-3 py-2 border rounded text-sm"
+                />
+                <textarea
+                  placeholder="Professional Summary"
+                  value={cvData.summary || ''}
+                  onChange={(e) => updatePersonalDetails(cvData.name, cvData.email, cvData.phone, cvData.location, e.target.value)}
+                  className="w-full px-3 py-2 border rounded text-sm h-20"
+                />
+              </>
+            )}
+            {sectionType === 'experience' && (
+              <>
+                <div className="max-h-96 overflow-y-auto space-y-3">
+                  {cvData.experience.map((exp, idx) => (
+                    <div key={idx} className="border rounded p-3 bg-gray-50 space-y-2">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-semibold">Position {idx + 1}</span>
+                        <button
+                          onClick={() => removeExperience(idx)}
+                          className="text-red-600 hover:text-red-700"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Job Title"
+                        value={exp.title}
+                        onChange={(e) => {
+                          const newExp = [...cvData.experience];
+                          newExp[idx].title = e.target.value;
+                          updateExperience(newExp);
+                        }}
+                        className="w-full px-3 py-2 border rounded text-sm"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Company"
+                        value={exp.company}
+                        onChange={(e) => {
+                          const newExp = [...cvData.experience];
+                          newExp[idx].company = e.target.value;
+                          updateExperience(newExp);
+                        }}
+                        className="w-full px-3 py-2 border rounded text-sm"
+                      />
+                      <div className="flex gap-2">
+                        <input
+                          type="date"
+                          value={exp.startDate}
+                          onChange={(e) => {
+                            const newExp = [...cvData.experience];
+                            newExp[idx].startDate = e.target.value;
+                            updateExperience(newExp);
+                          }}
+                          className="flex-1 px-3 py-2 border rounded text-sm"
+                        />
+                        <input
+                          type="date"
+                          value={exp.endDate || ''}
+                          onChange={(e) => {
+                            const newExp = [...cvData.experience];
+                            newExp[idx].endDate = e.target.value;
+                            updateExperience(newExp);
+                          }}
+                          className="flex-1 px-3 py-2 border rounded text-sm"
+                        />
+                      </div>
+                      <textarea
+                        placeholder="Description"
+                        value={exp.description}
+                        onChange={(e) => {
+                          const newExp = [...cvData.experience];
+                          newExp[idx].description = e.target.value;
+                          updateExperience(newExp);
+                        }}
+                        className="w-full px-3 py-2 border rounded text-sm h-12"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={addExperience}
+                  className="w-full px-3 py-2 bg-green-50 text-green-600 rounded text-sm hover:bg-green-100 font-medium flex items-center justify-center gap-2"
+                >
+                  <Plus size={16} /> Add Experience
+                </button>
+              </>
+            )}
+            {sectionType === 'education' && (
+              <>
+                <div className="max-h-96 overflow-y-auto space-y-3">
+                  {cvData.education.map((edu, idx) => (
+                    <div key={idx} className="border rounded p-3 bg-gray-50 space-y-2">
+                      <div className="flex justify-between items-center mb-2">
+                        <span className="text-sm font-semibold">Education {idx + 1}</span>
+                        <button
+                          onClick={() => removeEducation(idx)}
+                          className="text-red-600 hover:text-red-700"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Degree"
+                        value={edu.degree}
+                        onChange={(e) => {
+                          const newEdu = [...cvData.education];
+                          newEdu[idx].degree = e.target.value;
+                          updateEducation(newEdu);
+                        }}
+                        className="w-full px-3 py-2 border rounded text-sm"
+                      />
+                      <input
+                        type="text"
+                        placeholder="School"
+                        value={edu.school}
+                        onChange={(e) => {
+                          const newEdu = [...cvData.education];
+                          newEdu[idx].school = e.target.value;
+                          updateEducation(newEdu);
+                        }}
+                        className="w-full px-3 py-2 border rounded text-sm"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Field of Study"
+                        value={edu.field}
+                        onChange={(e) => {
+                          const newEdu = [...cvData.education];
+                          newEdu[idx].field = e.target.value;
+                          updateEducation(newEdu);
+                        }}
+                        className="w-full px-3 py-2 border rounded text-sm"
+                      />
+                      <input
+                        type="date"
+                        value={edu.graduationDate}
+                        onChange={(e) => {
+                          const newEdu = [...cvData.education];
+                          newEdu[idx].graduationDate = e.target.value;
+                          updateEducation(newEdu);
+                        }}
+                        className="w-full px-3 py-2 border rounded text-sm"
+                      />
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={addEducation}
+                  className="w-full px-3 py-2 bg-purple-50 text-purple-600 rounded text-sm hover:bg-purple-100 font-medium flex items-center justify-center gap-2"
+                >
+                  <Plus size={16} /> Add Education
+                </button>
+              </>
+            )}
+            {sectionType === 'skills' && (
+              <>
+                <div className="max-h-72 overflow-y-auto space-y-2">
+                  {cvData.skills.map((skill, idx) => (
+                    <div key={idx} className="flex gap-2">
+                      <input
+                        type="text"
+                        value={skill}
+                        onChange={(e) => {
+                          const newSkills = [...cvData.skills];
+                          newSkills[idx] = e.target.value;
+                          updateSkills(newSkills);
+                        }}
+                        className="flex-1 px-3 py-2 border rounded text-sm"
+                      />
+                      <button
+                        onClick={() => updateSkills(cvData.skills.filter((_, i) => i !== idx))}
+                        className="px-2 py-2 text-red-600 hover:text-red-700"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={() => updateSkills([...cvData.skills, 'New Skill'])}
+                  className="w-full px-3 py-2 bg-orange-50 text-orange-600 rounded text-sm hover:bg-orange-100 font-medium flex items-center justify-center gap-2"
+                >
+                  <Plus size={16} /> Add Skill
+                </button>
+              </>
+            )}
+            {sectionType === 'languages' && (
+              <>
+                <div className="max-h-72 overflow-y-auto space-y-3">
+                  {(cvData.languages || []).map((lang, idx) => (
+                    <div key={idx} className="flex gap-2 items-end">
+                      <div className="flex-1 space-y-1">
+                        <input
+                          type="text"
+                          placeholder="Language"
+                          value={lang.name}
+                          onChange={(e) => updateLanguage(idx, 'name', e.target.value)}
+                          className="w-full px-3 py-2 border rounded text-sm"
+                        />
+                      </div>
+                      <select
+                        value={lang.level}
+                        onChange={(e) => updateLanguage(idx, 'level', e.target.value)}
+                        className="px-3 py-2 border rounded text-sm"
+                      >
+                        <option>Beginner</option>
+                        <option>Intermediate</option>
+                        <option>Advanced</option>
+                        <option>Fluent</option>
+                      </select>
+                      <button
+                        onClick={() => removeLanguage(idx)}
+                        className="px-2 py-2 text-red-600 hover:text-red-700"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={addLanguage}
+                  className="w-full px-3 py-2 bg-indigo-50 text-indigo-600 rounded text-sm hover:bg-indigo-100 font-medium flex items-center justify-center gap-2"
+                >
+                  <Plus size={16} /> Add Language
+                </button>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   const updatePersonalDetails = (name: string, email: string, phone: string, location: string, summary: string) => {
     handleDataChange({
       ...cvData,
@@ -248,348 +580,8 @@ export default function EditableCVBuilder({
             </select>
           </div>
 
-          {/* Personal Details Section */}
-          <div className="border rounded-lg">
-            <button
-              onClick={() => toggleSection('personal')}
-              className="w-full p-4 flex justify-between items-center bg-blue-50 hover:bg-blue-100 transition font-bold"
-            >
-              {renderSectionHeader('personal', 'Personal Details', '👤')}
-            </button>
-            {expandedSections.personal && (
-              <div className="p-4 space-y-3 bg-white">
-                <input
-                  type="text"
-                  placeholder="Full Name"
-                  value={cvData.name}
-                  onChange={(e) => updatePersonalDetails(e.target.value, cvData.email, cvData.phone, cvData.location, cvData.summary || '')}
-                  className="w-full px-3 py-2 border rounded text-sm"
-                />
-                <input
-                  type="email"
-                  placeholder="Email"
-                  value={cvData.email}
-                  onChange={(e) => updatePersonalDetails(cvData.name, e.target.value, cvData.phone, cvData.location, cvData.summary || '')}
-                  className="w-full px-3 py-2 border rounded text-sm"
-                />
-                
-                {/* Links inline */}
-                <div className="space-y-2">
-                  {(cvData.links || []).map((link, idx) => (
-                    <div key={idx} className="flex gap-2 items-center bg-gray-50 p-2 rounded">
-                      <input
-                        type="text"
-                        placeholder="Icon"
-                        value={link.icon || ''}
-                        onChange={(e) => updateLink(idx, 'icon', e.target.value)}
-                        maxLength={2}
-                        className="w-8 px-1 py-1 border rounded text-center text-sm"
-                      />
-                      <input
-                        type="text"
-                        placeholder="Label"
-                        value={link.label}
-                        onChange={(e) => updateLink(idx, 'label', e.target.value)}
-                        className="flex-1 px-2 py-1 border rounded text-sm"
-                      />
-                      <input
-                        type="url"
-                        placeholder="URL"
-                        value={link.url}
-                        onChange={(e) => updateLink(idx, 'url', e.target.value)}
-                        className="flex-1 px-2 py-1 border rounded text-sm"
-                      />
-                      <button
-                        onClick={() => removeLink(idx)}
-                        className="px-1 py-1 text-red-600 hover:text-red-700"
-                      >
-                        <Trash2 size={14} />
-                      </button>
-                    </div>
-                  ))}
-                  <button
-                    onClick={addLink}
-                    className="w-full px-3 py-2 text-blue-600 hover:text-blue-700 text-sm flex items-center justify-center gap-1 border border-dashed border-blue-300 rounded hover:bg-blue-50"
-                  >
-                    <Plus size={16} /> Add Link
-                  </button>
-                </div>
-
-                <input
-                  type="tel"
-                  placeholder="Phone"
-                  value={cvData.phone}
-                  onChange={(e) => updatePersonalDetails(cvData.name, cvData.email, e.target.value, cvData.location, cvData.summary || '')}
-                  className="w-full px-3 py-2 border rounded text-sm"
-                />
-                <input
-                  type="text"
-                  placeholder="Location"
-                  value={cvData.location}
-                  onChange={(e) => updatePersonalDetails(cvData.name, cvData.email, cvData.phone, e.target.value, cvData.summary || '')}
-                  className="w-full px-3 py-2 border rounded text-sm"
-                />
-                <textarea
-                  placeholder="Professional Summary"
-                  value={cvData.summary || ''}
-                  onChange={(e) => updatePersonalDetails(cvData.name, cvData.email, cvData.phone, cvData.location, e.target.value)}
-                  className="w-full px-3 py-2 border rounded text-sm h-20"
-                />
-              </div>
-            )}
-          </div>
-
-          {/* Experience Section */}
-          <div className="border rounded-lg">
-            <button
-              onClick={() => toggleSection('experience')}
-              className="w-full p-4 flex justify-between items-center bg-green-50 hover:bg-green-100 transition font-bold"
-            >
-              {renderSectionHeader('experience', `Experience (${cvData.experience.length})`, '💼')}
-            </button>
-            {expandedSections.experience && (
-              <div className="p-4 space-y-3 bg-white max-h-96 overflow-y-auto">
-                {cvData.experience.map((exp, idx) => (
-                  <div key={idx} className="border rounded p-3 bg-gray-50 space-y-2">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-semibold">Position {idx + 1}</span>
-                      <button
-                        onClick={() => removeExperience(idx)}
-                        className="text-red-600 hover:text-red-700"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Job Title"
-                      value={exp.title}
-                      onChange={(e) => {
-                        const newExp = [...cvData.experience];
-                        newExp[idx].title = e.target.value;
-                        updateExperience(newExp);
-                      }}
-                      className="w-full px-3 py-2 border rounded text-sm"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Company"
-                      value={exp.company}
-                      onChange={(e) => {
-                        const newExp = [...cvData.experience];
-                        newExp[idx].company = e.target.value;
-                        updateExperience(newExp);
-                      }}
-                      className="w-full px-3 py-2 border rounded text-sm"
-                    />
-                    <div className="flex gap-2">
-                      <input
-                        type="date"
-                        value={exp.startDate}
-                        onChange={(e) => {
-                          const newExp = [...cvData.experience];
-                          newExp[idx].startDate = e.target.value;
-                          updateExperience(newExp);
-                        }}
-                        className="flex-1 px-3 py-2 border rounded text-sm"
-                      />
-                      <input
-                        type="date"
-                        value={exp.endDate || ''}
-                        onChange={(e) => {
-                          const newExp = [...cvData.experience];
-                          newExp[idx].endDate = e.target.value;
-                          updateExperience(newExp);
-                        }}
-                        className="flex-1 px-3 py-2 border rounded text-sm"
-                      />
-                    </div>
-                    <textarea
-                      placeholder="Description"
-                      value={exp.description}
-                      onChange={(e) => {
-                        const newExp = [...cvData.experience];
-                        newExp[idx].description = e.target.value;
-                        updateExperience(newExp);
-                      }}
-                      className="w-full px-3 py-2 border rounded text-sm h-12"
-                    />
-                  </div>
-                ))}
-                <button
-                  onClick={addExperience}
-                  className="w-full px-3 py-2 bg-green-50 text-green-600 rounded text-sm hover:bg-green-100 font-medium flex items-center justify-center gap-2"
-                >
-                  <Plus size={16} /> Add Experience
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Education Section */}
-          <div className="border rounded-lg">
-            <button
-              onClick={() => toggleSection('education')}
-              className="w-full p-4 flex justify-between items-center bg-purple-50 hover:bg-purple-100 transition font-bold"
-            >
-              {renderSectionHeader('education', `Education (${cvData.education.length})`, '🎓')}
-            </button>
-            {expandedSections.education && (
-              <div className="p-4 space-y-3 bg-white max-h-96 overflow-y-auto">
-                {cvData.education.map((edu, idx) => (
-                  <div key={idx} className="border rounded p-3 bg-gray-50 space-y-2">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-semibold">Education {idx + 1}</span>
-                      <button
-                        onClick={() => removeEducation(idx)}
-                        className="text-red-600 hover:text-red-700"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    </div>
-                    <input
-                      type="text"
-                      placeholder="Degree"
-                      value={edu.degree}
-                      onChange={(e) => {
-                        const newEdu = [...cvData.education];
-                        newEdu[idx].degree = e.target.value;
-                        updateEducation(newEdu);
-                      }}
-                      className="w-full px-3 py-2 border rounded text-sm"
-                    />
-                    <input
-                      type="text"
-                      placeholder="School"
-                      value={edu.school}
-                      onChange={(e) => {
-                        const newEdu = [...cvData.education];
-                        newEdu[idx].school = e.target.value;
-                        updateEducation(newEdu);
-                      }}
-                      className="w-full px-3 py-2 border rounded text-sm"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Field of Study"
-                      value={edu.field}
-                      onChange={(e) => {
-                        const newEdu = [...cvData.education];
-                        newEdu[idx].field = e.target.value;
-                        updateEducation(newEdu);
-                      }}
-                      className="w-full px-3 py-2 border rounded text-sm"
-                    />
-                    <input
-                      type="date"
-                      value={edu.graduationDate}
-                      onChange={(e) => {
-                        const newEdu = [...cvData.education];
-                        newEdu[idx].graduationDate = e.target.value;
-                        updateEducation(newEdu);
-                      }}
-                      className="w-full px-3 py-2 border rounded text-sm"
-                    />
-                  </div>
-                ))}
-                <button
-                  onClick={addEducation}
-                  className="w-full px-3 py-2 bg-purple-50 text-purple-600 rounded text-sm hover:bg-purple-100 font-medium flex items-center justify-center gap-2"
-                >
-                  <Plus size={16} /> Add Education
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Skills Section */}
-          <div className="border rounded-lg">
-            <button
-              onClick={() => toggleSection('skills')}
-              className="w-full p-4 flex justify-between items-center bg-orange-50 hover:bg-orange-100 transition font-bold"
-            >
-              {renderSectionHeader('skills', `Skills (${cvData.skills.length})`, '⭐')}
-            </button>
-            {expandedSections.skills && (
-              <div className="p-4 space-y-2 bg-white max-h-72 overflow-y-auto">
-                {cvData.skills.map((skill, idx) => (
-                  <div key={idx} className="flex gap-2">
-                    <input
-                      type="text"
-                      value={skill}
-                      onChange={(e) => {
-                        const newSkills = [...cvData.skills];
-                        newSkills[idx] = e.target.value;
-                        updateSkills(newSkills);
-                      }}
-                      className="flex-1 px-3 py-2 border rounded text-sm"
-                    />
-                    <button
-                      onClick={() => updateSkills(cvData.skills.filter((_, i) => i !== idx))}
-                      className="px-2 py-2 text-red-600 hover:text-red-700"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                ))}
-                <button
-                  onClick={() => updateSkills([...cvData.skills, 'New Skill'])}
-                  className="w-full px-3 py-2 bg-orange-50 text-orange-600 rounded text-sm hover:bg-orange-100 font-medium flex items-center justify-center gap-2"
-                >
-                  <Plus size={16} /> Add Skill
-                </button>
-              </div>
-            )}
-          </div>
-
-          {/* Languages Section */}
-          <div className="border rounded-lg">
-            <button
-              onClick={() => toggleSection('languages')}
-              className="w-full p-4 flex justify-between items-center bg-indigo-50 hover:bg-indigo-100 transition font-bold"
-            >
-              {renderSectionHeader('languages', `Languages (${(cvData.languages || []).length})`, '🌐')}
-            </button>
-            {expandedSections.languages && (
-              <div className="p-4 space-y-3 bg-white max-h-72 overflow-y-auto">
-                {(cvData.languages || []).map((lang, idx) => (
-                  <div key={idx} className="flex gap-2 items-end">
-                    <div className="flex-1 space-y-1">
-                      <input
-                        type="text"
-                        placeholder="Language"
-                        value={lang.name}
-                        onChange={(e) => updateLanguage(idx, 'name', e.target.value)}
-                        className="w-full px-3 py-2 border rounded text-sm"
-                      />
-                    </div>
-                    <select
-                      value={lang.level}
-                      onChange={(e) => updateLanguage(idx, 'level', e.target.value)}
-                      className="px-3 py-2 border rounded text-sm"
-                    >
-                      <option>Beginner</option>
-                      <option>Intermediate</option>
-                      <option>Advanced</option>
-                      <option>Fluent</option>
-                    </select>
-                    <button
-                      onClick={() => removeLanguage(idx)}
-                      className="px-2 py-2 text-red-600 hover:text-red-700"
-                    >
-                      <Trash2 size={16} />
-                    </button>
-                  </div>
-                ))}
-                <button
-                  onClick={addLanguage}
-                  className="w-full px-3 py-2 bg-indigo-50 text-indigo-600 rounded text-sm hover:bg-indigo-100 font-medium flex items-center justify-center gap-2"
-                >
-                  <Plus size={16} /> Add Language
-                </button>
-              </div>
-            )}
-          </div>
+          {/* Dynamic Sections - Reorderable by User */}
+          {sectionOrder.map((sectionType) => renderSectionContent(sectionType))}
 
           {/* Additional Sections Manager */}
           <AdditionalSectionsManager cvData={cvData} onDataChange={handleDataChange} />
